@@ -9,8 +9,12 @@ def fetch_regex(prefix):
     response = requests.get(url)
     if response.status_code == 200:
         data = response.json()
-        return data.get("pattern", "")
-    return None
+        return data.get("pattern", ""), True  # Return pattern and "prefix exists" flag
+    elif response.status_code == 404:
+        data = response.json()
+        if data.get("detail", "").startswith("Prefix not found:"):
+            return None, False  # Return None and "prefix doesn't exist" flag
+    return None, True  # Return None but "prefix exists" flag for other cases
 
 def trim_regex(regex):
     if not regex:
@@ -51,12 +55,17 @@ def generate_typescript_file():
 export const bioregistryRules = [
 """
 
-    # Track resources with missing patterns
+    # Track resources with missing patterns and invalid prefixes
     missing_patterns = []
+    invalid_prefixes = []
 
     # Process each resource
     for resource in resources:
-        regex = fetch_regex(resource)
+        regex, prefix_exists = fetch_regex(resource)
+        if not prefix_exists:
+            invalid_prefixes.append(resource)
+            continue
+        
         if regex:
             trimmed_regex = trim_regex(regex)
             if trimmed_regex:
@@ -78,13 +87,17 @@ export const bioregistryRules = [
     with open("bioregistry.ts", "w") as file:
         file.write(ts_content)
 
-    # If there are missing patterns or duplicates, write them to files for the workflow
+    # If there are issues, write them to files for the workflow
     has_issues = False
     if missing_patterns:
         with open("missing_patterns.txt", "w") as file:
             file.write("\n".join(missing_patterns))
         has_issues = True
     if duplicates:
+        has_issues = True
+    if invalid_prefixes:
+        with open("invalid_prefixes.txt", "w") as file:
+            file.write("\n".join(invalid_prefixes))
         has_issues = True
 
     return not has_issues  # Return True if no issues, False if there are issues
