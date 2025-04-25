@@ -1,15 +1,12 @@
-name: Update Bioregistry Rules
+name: Validate Bioregistry Rules
 
 on:
   pull_request:
     branches:
       - main
-  push:
-    branches:
-      - main
 
 jobs:
-  update-rules:
+  validate-rules:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -96,39 +93,4 @@ jobs:
                 repo: context.repo.repo,
                 body: message
               });
-            }
-
-  alphabetize-resources:
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    needs: update-rules
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
-
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install pyyaml
-
-      - name: Alphabetize resources
-        run: |
-          python -c "
-          import yaml
-          with open('collection.yaml', 'r') as f:
-              data = yaml.safe_load(f)
-          data['00000016']['resources'].sort()
-          with open('collection.yaml', 'w') as f:
-              yaml.dump(data, f, default_flow_style=False)
-          "
-
-      - name: Commit and push if changed
-        run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          git add collection.yaml
-          git diff --quiet && git diff --staged --quiet || (git commit -m "Alphabetize resources in collection.yaml" && git push) 
+            } 
