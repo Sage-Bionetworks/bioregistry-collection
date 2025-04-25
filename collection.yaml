@@ -52,7 +52,6 @@
     - dmba
     - drks
     - dsm5
-    - ecocyc
     - ega.dataset
     - ega.study
     - emdb
@@ -63,9 +62,7 @@
     - eupath
     - flybase
     - gbif
-    - genbank
     - geo
-    - gnomad
     - go
     - hba
     - hc.din
@@ -98,12 +95,10 @@
     - ndfrt
     - ncit
     - nucc.taxonomy
-    - obo
     - omim
     - orphanet
     - orphanet.ordo
     - pactr
-    - panorama
     - panther.family
     - panther.node
     - panther.pathway
@@ -115,7 +110,6 @@
     - pharmgkb.drug
     - pharmgkb.gene
     - pharmgkb.pathways
-    - phrr
     - pmc
     - pombase
     - pride
