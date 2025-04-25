@@ -25,13 +25,18 @@ jobs:
         id: generate
         run: python generate_bioregistry_rules.py
 
-      - name: Check for missing patterns
+      - name: Check for issues
         if: failure()
         run: |
           if [ -f missing_patterns.txt ]; then
             echo "Missing patterns found for the following resources:"
             cat missing_patterns.txt
             echo "::error::Some resources are missing regex patterns. Check the logs for details."
+          fi
+          if [ -f duplicates.txt ]; then
+            echo "Duplicate resources found:"
+            cat duplicates.txt
+            echo "::error::Duplicate resources found in collection.yaml. Check the logs for details."
           fi
 
       - name: Create Pull Request Comment
@@ -40,20 +45,36 @@ jobs:
         with:
           script: |
             const fs = require('fs');
-            let message = '## Missing Bioregistry Patterns\n\n';
+            let message = '## Bioregistry Collection Issues\n\n';
+            let hasIssues = false;
             
             if (fs.existsSync('missing_patterns.txt')) {
               const missingPatterns = fs.readFileSync('missing_patterns.txt', 'utf8');
+              message += '### Missing Regex Patterns\n\n';
               message += 'The following resources are missing regex patterns:\n\n';
               message += '```\n';
               message += missingPatterns;
               message += '\n```\n\n';
-              message += 'Please check if these resources are correctly registered in bioregistry.io.';
+              message += 'Please check if these resources are correctly registered in bioregistry.io.\n\n';
+              hasIssues = true;
             }
             
-            github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: message
-            }); 
+            if (fs.existsSync('duplicates.txt')) {
+              const duplicates = fs.readFileSync('duplicates.txt', 'utf8');
+              message += '### Duplicate Resources\n\n';
+              message += 'The following resources appear multiple times in collection.yaml:\n\n';
+              message += '```\n';
+              message += duplicates;
+              message += '\n```\n\n';
+              message += 'Please remove the duplicate entries.\n\n';
+              hasIssues = true;
+            }
+            
+            if (hasIssues) {
+              github.rest.issues.createComment({
+                issue_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body: message
+              });
+            } 
