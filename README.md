@@ -1,6 +1,6 @@
 # Bioregistry Collection
 
-A Sage-curated list of bioregistry.io prefixes used on Synapse.org. This repository maintains a collection of bioregistry resources and provides automated tools to validate and maintain them.
+A Sage-curated list of bioregistry.io prefixes used on Synapse.org. 
 
 ## Automated Workflows
 
