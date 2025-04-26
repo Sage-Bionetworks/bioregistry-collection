@@ -92,6 +92,7 @@
   - eupath
   - exac.variant
   - fairsharing
+  - flybase
   - fma
   - funderregistry
   - gard
@@ -221,7 +222,6 @@
   - wikipathways
   - wormbase
   - xenbase
-  - flybase
   - zenodo.record
   - zfin
   - zinc
