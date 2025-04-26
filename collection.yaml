@@ -22,10 +22,10 @@
   - bfo
   - biocyc
   - bioportal
-  - biorxiv
-  - biostudies
   - bioproject
+  - biorxiv
   - biosample
+  - biostudies
   - bmrb
   - brenda
   - brenda.ligand
@@ -157,9 +157,9 @@
   - uberon
   - unii
   - uniprot
-  - wikipathways
   - wikidata
   - wikigenes
+  - wikipathways
   - wormbase
   - xenbase
   - zenodo.record

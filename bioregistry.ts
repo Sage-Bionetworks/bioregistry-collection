@@ -17,6 +17,10 @@ export const bioregistryRules = [
     onMatch,
   },
   {
+    regex: /(atc:[A-Z](\d+([A-Z]{1,2}(\d+)?)?)?)/,
+    onMatch,
+  },
+  {
     regex: /(atcc:([a-zA-Z]+-)?\d+(\.\d)?)/,
     onMatch,
   },
@@ -29,6 +33,10 @@ export const bioregistryRules = [
     onMatch,
   },
   {
+    regex: /(biocyc:[A-Z-0-9]+(\:)?[A-Za-z0-9+_.%-:]+)/,
+    onMatch,
+  },
+  {
     regex: /(bioportal:(\d+)|(\w+))/,
     onMatch,
   },
@@ -38,6 +46,14 @@ export const bioregistryRules = [
   },
   {
     regex: /(biostudies:S-[A-Z]{4}[\-\_A-Z\d]+)/,
+    onMatch,
+  },
+  {
+    regex: /(bioproject:PRJ[DEN][A-Z]\d+)/,
+    onMatch,
+  },
+  {
+    regex: /(biosample:SAM[NED](\w)?\d+)/,
     onMatch,
   },
   {
@@ -77,7 +93,7 @@ export const bioregistryRules = [
     onMatch,
   },
   {
-    regex: /(chictr:ChiCTR(-[A-Z]+-)?\d+)/,
+    regex: /(chembl.compound:CHEMBL\d+)/,
     onMatch,
   },
   {
@@ -129,6 +145,10 @@ export const bioregistryRules = [
     onMatch,
   },
   {
+    regex: /(ctd.chemical:[CD]\d+)/,
+    onMatch,
+  },
+  {
     regex: /(ctis:\d{4}-\d+-\d+-\d+)/,
     onMatch,
   },
@@ -145,6 +165,14 @@ export const bioregistryRules = [
     onMatch,
   },
   {
+    regex: /(decipher:\d+)/,
+    onMatch,
+  },
+  {
+    regex: /(depmap:ACH-\d+)/,
+    onMatch,
+  },
+  {
     regex: /(dhba:\d+)/,
     onMatch,
   },
@@ -157,11 +185,19 @@ export const bioregistryRules = [
     onMatch,
   },
   {
+    regex: /(doi:10.\d{2,9}/.*)/,
+    onMatch,
+  },
+  {
+    regex: /(doid:\d+)/,
+    onMatch,
+  },
+  {
     regex: /(drks:DRKS\d+)/,
     onMatch,
   },
   {
-    regex: /(dsm5:\d{3}\.\d{2})/,
+    regex: /(drugbank:DB\d{5})/,
     onMatch,
   },
   {
@@ -197,7 +233,19 @@ export const bioregistryRules = [
     onMatch,
   },
   {
+    regex: /(exac.variant:\d{1,2}\-\d+\-[GATC]\-[GATC])/,
+    onMatch,
+  },
+  {
     regex: /(flybase:FB\w{2}\d{7})/,
+    onMatch,
+  },
+  {
+    regex: /(fma:\d+)/,
+    onMatch,
+  },
+  {
+    regex: /(gard:\d+)/,
     onMatch,
   },
   {
@@ -213,11 +261,11 @@ export const bioregistryRules = [
     onMatch,
   },
   {
-    regex: /(hba:\d+)/,
+    regex: /(gtdb:[cdfgops]__\w+\S+)/,
     onMatch,
   },
   {
-    regex: /(hc.din:\d{8})/,
+    regex: /(hba:\d+)/,
     onMatch,
   },
   {
@@ -241,6 +289,14 @@ export const bioregistryRules = [
     onMatch,
   },
   {
+    regex: /(hmdb:HMDB\d+)/,
+    onMatch,
+  },
+  {
+    regex: /(hp:\d{7})/,
+    onMatch,
+  },
+  {
     regex: /(icd10:(([XVI]+)|([A-Z][0-9]+((-[A-Z][0-9]+)|(\.[0-9]))?)))/,
     onMatch,
   },
@@ -257,10 +313,6 @@ export const bioregistryRules = [
     onMatch,
   },
   {
-    regex: /(ietf.language:\w{2,3}(-\w+)?)/,
-    onMatch,
-  },
-  {
     regex: /(imgt.hla:[A-Z0-9*:]+)/,
     onMatch,
   },
@@ -273,10 +325,6 @@ export const bioregistryRules = [
     onMatch,
   },
   {
-    regex: /(irct:IRCT\d+N\d+)/,
-    onMatch,
-  },
-  {
     regex: /(iso.3166:\d+)/,
     onMatch,
   },
@@ -285,7 +333,7 @@ export const bioregistryRules = [
     onMatch,
   },
   {
-    regex: /(itmctr:ITMCTR\d+)/,
+    regex: /(itis:\d+)/,
     onMatch,
   },
   {
@@ -293,11 +341,15 @@ export const bioregistryRules = [
     onMatch,
   },
   {
-    regex: /(kcris:KCT\d+)/,
+    regex: /(kegg.compound:C\d+)/,
     onMatch,
   },
   {
-    regex: /(lbctr:LBCTR\d+)/,
+    regex: /(kegg.pathway:\w{2,4}\d{5})/,
+    onMatch,
+  },
+  {
+    regex: /(kegg.reaction:R\d+)/,
     onMatch,
   },
   {
@@ -317,7 +369,31 @@ export const bioregistryRules = [
     onMatch,
   },
   {
+    regex: /(mesh:(C|D|M)\d{6,9})/,
+    onMatch,
+  },
+  {
+    regex: /(metabolights:MTBLS\d+)/,
+    onMatch,
+  },
+  {
     regex: /(mgi:\d+)/,
+    onMatch,
+  },
+  {
+    regex: /(mondo:\d{7})/,
+    onMatch,
+  },
+  {
+    regex: /(ncbigene:\d+)/,
+    onMatch,
+  },
+  {
+    regex: /(ncbiprotein:\w+_?\d+(.\d+)?)/,
+    onMatch,
+  },
+  {
+    regex: /(ncbitaxon:\d+)/,
     onMatch,
   },
   {
@@ -333,7 +409,7 @@ export const bioregistryRules = [
     onMatch,
   },
   {
-    regex: /(nucc.taxonomy:\d{3}\w(\w|\d_)\d{4}X)/,
+    regex: /(nord:\d+)/,
     onMatch,
   },
   {
@@ -350,10 +426,6 @@ export const bioregistryRules = [
   },
   {
     regex: /(orphanet.ordo:C?\d+)/,
-    onMatch,
-  },
-  {
-    regex: /(pactr:PACTR\d+)/,
     onMatch,
   },
   {
@@ -381,7 +453,15 @@ export const bioregistryRules = [
     onMatch,
   },
   {
+    regex: /(pdb-ccd:\w{1,3})/,
+    onMatch,
+  },
+  {
     regex: /(peptideatlas.dataset:PASS\d{5})/,
+    onMatch,
+  },
+  {
+    regex: /(pfam:PF\d{5})/,
     onMatch,
   },
   {
@@ -410,6 +490,10 @@ export const bioregistryRules = [
   },
   {
     regex: /(pride:\d{7})/,
+    onMatch,
+  },
+  {
+    regex: /(pubchem.compound:\d+)/,
     onMatch,
   },
   {
@@ -457,11 +541,11 @@ export const bioregistryRules = [
     onMatch,
   },
   {
-    regex: /(sgd:((S\d+$)|(Y[A-Z]{2}\d{3}[a-zA-Z](\-[A-Z])?)))/,
+    regex: /(scop:\d+)/,
     onMatch,
   },
   {
-    regex: /(slctr:SLCTR/\d{4}/\d+)/,
+    regex: /(sgd:((S\d+$)|(Y[A-Z]{2}\d{3}[a-zA-Z](\-[A-Z])?)))/,
     onMatch,
   },
   {
@@ -485,7 +569,7 @@ export const bioregistryRules = [
     onMatch,
   },
   {
-    regex: /(uminctr:UMIN\d+$|^C\d+)/,
+    regex: /(uberon:\d+)/,
     onMatch,
   },
   {
@@ -494,6 +578,10 @@ export const bioregistryRules = [
   },
   {
     regex: /(uniprot:([A-N,R-Z][0-9]([A-Z][A-Z, 0-9][A-Z, 0-9][0-9]){1,2})|([O,P,Q][0-9][A-Z, 0-9][A-Z, 0-9][A-Z, 0-9][0-9])(\.\d+)?)/,
+    onMatch,
+  },
+  {
+    regex: /(wikipathways:WP\d{1,5}(\_r\d+)?)/,
     onMatch,
   },
   {
@@ -510,6 +598,10 @@ export const bioregistryRules = [
   },
   {
     regex: /(xenbase:XB\-\w+\-\d+)/,
+    onMatch,
+  },
+  {
+    regex: /(zenodo.record:\d+)/,
     onMatch,
   },
   {
