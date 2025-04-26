@@ -21,7 +21,6 @@
   - arxiv
   - atc
   - atcc
-  - bacdive
   - bfo
   - bgee.gene
   - biocyc
@@ -220,6 +219,7 @@
   - wikigenes
   - wikipathways
   - wormbase
+  - bacdive
   - xenbase
   - flybase
   - zenodo.record
