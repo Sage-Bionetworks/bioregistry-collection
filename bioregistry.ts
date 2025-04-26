@@ -41,19 +41,19 @@ export const bioregistryRules = [
     onMatch,
   },
   {
-    regex: /(biorxiv:(\d{4}\.\d{2}\.\d{2}\.)?\d{6,8}(v\d{1,3})?)/,
-    onMatch,
-  },
-  {
-    regex: /(biostudies:S-[A-Z]{4}[\-\_A-Z\d]+)/,
-    onMatch,
-  },
-  {
     regex: /(bioproject:PRJ[DEN][A-Z]\d+)/,
     onMatch,
   },
   {
+    regex: /(biorxiv:(\d{4}\.\d{2}\.\d{2}\.)?\d{6,8}(v\d{1,3})?)/,
+    onMatch,
+  },
+  {
     regex: /(biosample:SAM[NED](\w)?\d+)/,
+    onMatch,
+  },
+  {
+    regex: /(biostudies:S-[A-Z]{4}[\-\_A-Z\d]+)/,
     onMatch,
   },
   {
@@ -489,10 +489,6 @@ export const bioregistryRules = [
     onMatch,
   },
   {
-    regex: /(pride:\d{7})/,
-    onMatch,
-  },
-  {
     regex: /(pubchem.compound:\d+)/,
     onMatch,
   },
@@ -581,15 +577,15 @@ export const bioregistryRules = [
     onMatch,
   },
   {
-    regex: /(wikipathways:WP\d{1,5}(\_r\d+)?)/,
-    onMatch,
-  },
-  {
     regex: /(wikidata:(Q|P|E|L)\d+)/,
     onMatch,
   },
   {
     regex: /(wikigenes:\d+)/,
+    onMatch,
+  },
+  {
+    regex: /(wikipathways:WP\d{1,5}(\_r\d+)?)/,
     onMatch,
   },
   {
@@ -606,6 +602,258 @@ export const bioregistryRules = [
   },
   {
     regex: /(zfin:ZDB\-\w+\-\d+\-\d+)/,
+    onMatch,
+  },
+  {
+    regex: /(kegg:([CHDEGTMKR]\d+)|(\w+:[\w\d\.-]*)|([a-z]{3,5})|(\w{2,4}\d{5}))/,
+    onMatch,
+  },
+  {
+    regex: /(string:([A-N,R-Z][0-9][A-Z][A-Z, 0-9][A-Z, 0-9][0-9])|([O,P,Q][0-9][A-Z, 0-9][A-Z, 0-9][A-Z, 0-9][0-9])|([0-9][A-Za-z0-9]{3}))/,
+    onMatch,
+  },
+  {
+    regex: /(ensembl.metazoa:\w+(\.)?\d+)/,
+    onMatch,
+  },
+  {
+    regex: /(ensembl.fungi:[A-Z-a-z0-9]+)/,
+    onMatch,
+  },
+  {
+    regex: /(ensembl.plant:\w+(\.\d+)?(\.\d+)?)/,
+    onMatch,
+  },
+  {
+    regex: /(arrayexpress:[AEP]-\w{4}-\d+)/,
+    onMatch,
+  },
+  {
+    regex: /(metacyc:[A-Za-z0-9+_.%-:]+)/,
+    onMatch,
+  },
+  {
+    regex: /(genecards:[A-Za-z-0-9_]+(\@)?)/,
+    onMatch,
+  },
+  {
+    regex: /(intact:EBI\-[0-9]+)/,
+    onMatch,
+  },
+  {
+    regex: /(rnacentral:URS[0-9A-F]{10}(\_\d+)?)/,
+    onMatch,
+  },
+  {
+    regex: /(cath:[1-6]\.[0-9]+\.[0-9]+\.[0-9]+)/,
+    onMatch,
+  },
+  {
+    regex: /(tcdb:\d+(\.[A-Z])?(\.\d+)?(\.\d+)?(\.\d+)?)/,
+    onMatch,
+  },
+  {
+    regex: /(mirbase:MI\d{7})/,
+    onMatch,
+  },
+  {
+    regex: /(biogrid:\d+)/,
+    onMatch,
+  },
+  {
+    regex: /(bgee.gene:[A-Za-z0-9]+)/,
+    onMatch,
+  },
+  {
+    regex: /(gramene.gene:GR\:\d+)/,
+    onMatch,
+  },
+  {
+    regex: /(gramene.protein:\d+)/,
+    onMatch,
+  },
+  {
+    regex: /(gramene.growthstage:\d{7})/,
+    onMatch,
+  },
+  {
+    regex: /(tao:\d{7})/,
+    onMatch,
+  },
+  {
+    regex: /(peco:\d{7})/,
+    onMatch,
+  },
+  {
+    regex: /(uniprot.isoform:([A-N,R-Z][0-9][A-Z][A-Z, 0-9][A-Z, 0-9][0-9])|([O,P,Q][0-9][A-Z, 0-9][A-Z, 0-9][A-Z, 0-9][0-9])(\-\d+))/,
+    onMatch,
+  },
+  {
+    regex: /(uniprot.proteome:UP\d{9})/,
+    onMatch,
+  },
+  {
+    regex: /(uniref:UniRef(100|90|50)_([OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9]([A-Z][A-Z0-9]{2}[0-9]){1,2}|UPI[A-F0-9]{10}))/,
+    onMatch,
+  },
+  {
+    regex: /(uniparc:UPI[A-F0-9]{10})/,
+    onMatch,
+  },
+  {
+    regex: /(nextprot:NX_\w+)/,
+    onMatch,
+  },
+  {
+    regex: /(cdd:(cd)?\d{5})/,
+    onMatch,
+  },
+  {
+    regex: /(pfam.clan:CL\d+)/,
+    onMatch,
+  },
+  {
+    regex: /(rfam:RF\d{5})/,
+    onMatch,
+  },
+  {
+    regex: /(disprot:DP\d{5})/,
+    onMatch,
+  },
+  {
+    regex: /(pdb.ligand:[A-Za-z0-9]+)/,
+    onMatch,
+  },
+  {
+    regex: /(sabiork:\d+)/,
+    onMatch,
+  },
+  {
+    regex: /(signor:SIGNOR\-[A-Z]+\d+)/,
+    onMatch,
+  },
+  {
+    regex: /(complexportal:CPX-[0-9]+)/,
+    onMatch,
+  },
+  {
+    regex: /(kegg.drug:D\d+)/,
+    onMatch,
+  },
+  {
+    regex: /(kegg.disease:H\d+)/,
+    onMatch,
+  },
+  {
+    regex: /(kegg.glycan:G\d+)/,
+    onMatch,
+  },
+  {
+    regex: /(chemspider:\d+)/,
+    onMatch,
+  },
+  {
+    regex: /(ado:\d{7})/,
+    onMatch,
+  },
+  {
+    regex: /(zinc:(ZINC)?\d+)/,
+    onMatch,
+  },
+  {
+    regex: /(osf:[a-z0-9]{5})/,
+    onMatch,
+  },
+  {
+    regex: /(omop:\d+)/,
+    onMatch,
+  },
+  {
+    regex: /(duo:\d{7})/,
+    onMatch,
+  },
+  {
+    regex: /(cadsr:[0-9]*)/,
+    onMatch,
+  },
+  {
+    regex: /(ror:0[a-hj-km-np-tv-z|0-9]{6}[0-9]{2})/,
+    onMatch,
+  },
+  {
+    regex: /(cosmic.cell:\d+)/,
+    onMatch,
+  },
+  {
+    regex: /(dbgap:phs[0-9]{6}(.v\d+.p\d+)?)/,
+    onMatch,
+  },
+  {
+    regex: /(drugcentral:\d+)/,
+    onMatch,
+  },
+  {
+    regex: /(ecacc:\d+)/,
+    onMatch,
+  },
+  {
+    regex: /(edam:(data|topic|operation|format)\_\d{4})/,
+    onMatch,
+  },
+  {
+    regex: /(fairsharing:(bsg-[dscp]?\d{6})|(FAIRsharing\.\w+))/,
+    onMatch,
+  },
+  {
+    regex: /(funderregistry:\d+)/,
+    onMatch,
+  },
+  {
+    regex: /(gdc:[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12})/,
+    onMatch,
+  },
+  {
+    regex: /(icd11:[1-9]\d*)/,
+    onMatch,
+  },
+  {
+    regex: /(inchi:InChI\=1S?\/[A-Za-z0-9\.]+(\+[0-9]+)?(\/[cnpqbtmsih][A-Za-z0-9\-\+\(\)\,\/\?\;\.]+)*)/,
+    onMatch,
+  },
+  {
+    regex: /(inchikey:[A-Z]{14}\-[A-Z]{10}(\-[A-Z])?)/,
+    onMatch,
+  },
+  {
+    regex: /(insdc:([A-Z]\d{5}|[A-Z]{2}\d{6}|[A-Z]{4,6}\d{8,10}|[A-J][A-Z]{2}\d{5})(\.\d+)?)/,
+    onMatch,
+  },
+  {
+    regex: /(jax:\d{6})/,
+    onMatch,
+  },
+  {
+    regex: /(jaxmice:\d+)/,
+    onMatch,
+  },
+  {
+    regex: /(mir:\d{8})/,
+    onMatch,
+  },
+  {
+    regex: /(ark:/*[0-9A-Za-z]+(?:/[\w/.=*+@\$-]*)?(?:\?.*)?)/,
+    onMatch,
+  },
+  {
+    regex: /(rfc:\d+)/,
+    onMatch,
+  },
+  {
+    regex: /(rrrc:\d+)/,
+    onMatch,
+  },
+  {
+    regex: /(stitch:\w{14})/,
     onMatch,
   },
 ]
