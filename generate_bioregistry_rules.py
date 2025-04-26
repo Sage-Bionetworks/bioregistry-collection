@@ -25,9 +25,9 @@ def trim_regex(regex):
         regex = regex[:-1]
     return regex
 
-def escape_regex(regex):
-    # Escape special characters in regex pattern
-    return regex.replace("\\", "\\\\")
+def js_regex_pattern(py_pattern):
+    # Convert Python regex string to JS regex literal (single backslashes)
+    return py_pattern.replace('\\\\', '\\').replace('\\', '\\')
 
 def find_duplicates(resources):
     # Count occurrences of each resource
@@ -52,6 +52,8 @@ def generate_typescript_file():
     ts_content = """// This file is auto-generated. Do not edit manually.
 // Generated from bioregistry.io API based on collection.yaml
 
+const onMatch = (value: string) => `https://bioregistry.io/${value}`;
+
 export const bioregistryRules = [
 """
 
@@ -69,10 +71,10 @@ export const bioregistryRules = [
         if regex:
             trimmed_regex = trim_regex(regex)
             if trimmed_regex:
-                escaped_regex = escape_regex(trimmed_regex)
+                js_pattern = js_regex_pattern(trimmed_regex)
                 ts_content += f"""  {{
-    regex: /({resource}:{escaped_regex})/,
-    onMatch: (value: string) => `https://bioregistry.io/${{value}}`,
+    regex: /({resource}:{js_pattern})/,
+    onMatch,
   }},
 """
             else:
