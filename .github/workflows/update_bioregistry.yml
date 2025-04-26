@@ -92,9 +92,11 @@ jobs:
             // Parse validation.log for missing resolver and deprecated resources
             if (fs.existsSync('validation.log')) {
               const log = fs.readFileSync('validation.log', 'utf8');
-              const missingResolverSection = log.split('Missing resolver for the following resources:')[1]?.split('Deprecated resources detected:')[0];
-              if (missingResolverSection) {
-                const missingResolver = missingResolverSection.trim().split('\n').filter(Boolean);
+              
+              // Extract missing resolver resources
+              const missingResolverMatch = log.match(/Missing resolver for the following resources:\s+([\s\S]*?)(?=Deprecated resources detected:|$)/);
+              if (missingResolverMatch && missingResolverMatch[1]) {
+                const missingResolver = missingResolverMatch[1].trim().split('\n').filter(Boolean);
                 if (missingResolver.length > 0) {
                   message += '### Missing Resolver\n\n';
                   message += 'The following resources do not have a resolver (uri_format) in bioregistry.io:\n\n';
@@ -105,9 +107,11 @@ jobs:
                   hasIssues = true;
                 }
               }
-              const deprecatedSection = log.split('Deprecated resources detected:')[1];
-              if (deprecatedSection) {
-                const deprecated = deprecatedSection.trim().split('\n').filter(Boolean);
+              
+              // Extract deprecated resources
+              const deprecatedMatch = log.match(/Deprecated resources detected:\s+([\s\S]*?)(?=$)/);
+              if (deprecatedMatch && deprecatedMatch[1]) {
+                const deprecated = deprecatedMatch[1].trim().split('\n').filter(Boolean);
                 if (deprecated.length > 0) {
                   message += '### Deprecated Resources (Warning)\n\n';
                   message += 'The following resources are marked as deprecated in bioregistry.io:\n\n';
@@ -126,4 +130,9 @@ jobs:
                 repo: context.repo.repo,
                 body: message
               });
-            } 
+            }
+
+      - name: Cleanup temporary files
+        if: always()
+        run: |
+          rm -f validation.log 

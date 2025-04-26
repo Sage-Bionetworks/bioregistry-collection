@@ -4,12 +4,12 @@ import re
 import sys
 from collections import Counter
 
-def fetch_regex(prefix):
+def fetch_registry_entry(prefix):
     url = f"https://bioregistry.io/api/registry/{prefix}"
     response = requests.get(url)
     if response.status_code == 200:
         data = response.json()
-        return data.get("pattern", ""), True  # Return pattern and "prefix exists" flag
+        return data, True  # Return payload and "prefix exists" flag
     elif response.status_code == 404:
         data = response.json()
         if data.get("detail", "").startswith("Prefix not found:"):
@@ -49,16 +49,28 @@ export const bioregistryRules = [
 
     missing_patterns = []
     invalid_prefixes = []
+    missing_resolver = []
+    deprecated_resources = []
 
     for resource in resources:
-        regex, prefix_exists = fetch_regex(resource)
+        entry, prefix_exists = fetch_registry_entry(resource)
         if not prefix_exists:
             invalid_prefixes.append(resource)
             continue
-        if regex:
-            trimmed_regex = trim_regex(regex)
-            if trimmed_regex:
-                ts_content += f"  {{\n    regex: /({resource}:{trimmed_regex})/,\n    onMatch,\n  }},\n"
+        if entry is not None:
+            # Check for resolver (uri_format must exist and be non-empty)
+            if not entry.get("uri_format"):
+                missing_resolver.append(resource)
+            # Check for deprecation (warning only)
+            if entry.get("deprecated", False):
+                deprecated_resources.append(resource)
+            regex = entry.get("pattern", "")
+            if regex:
+                trimmed_regex = trim_regex(regex)
+                if trimmed_regex:
+                    ts_content += f"  {{\n    regex: /({resource}:{trimmed_regex})/,\n    onMatch,\n  }},\n"
+                else:
+                    missing_patterns.append(resource)
             else:
                 missing_patterns.append(resource)
         else:
@@ -80,9 +92,18 @@ export const bioregistryRules = [
         with open("invalid_prefixes.txt", "w") as file:
             file.write("\n".join(invalid_prefixes))
         has_issues = True
+    if missing_resolver:
+        print("Missing resolver for the following resources:")
+        for r in missing_resolver:
+            print(r)
+    if deprecated_resources:
+        print("Deprecated resources detected:")
+        for r in deprecated_resources:
+            print(r)
 
-    return not has_issues
+    # Return all issues for workflow reporting
+    return not has_issues, missing_patterns, invalid_prefixes, duplicates, missing_resolver, deprecated_resources
 
 if __name__ == "__main__":
-    success = generate_typescript_file()
+    success, missing_patterns, invalid_prefixes, duplicates, missing_resolver, deprecated_resources = generate_typescript_file()
     sys.exit(0 if success else 1) 
