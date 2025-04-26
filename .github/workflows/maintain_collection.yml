@@ -21,9 +21,6 @@ jobs:
           python -m pip install --upgrade pip
           pip install requests pyyaml
 
-      - name: Generate bioregistry rules
-        run: python generate_bioregistry_rules.py
-
       - name: Alphabetize resources
         run: |
           python -c "
@@ -34,6 +31,9 @@ jobs:
           with open('collection.yaml', 'w') as f:
               yaml.dump(data, f, default_flow_style=False)
           "
+
+      - name: Generate bioregistry rules
+        run: python generate_bioregistry_rules.py
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v6
