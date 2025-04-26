@@ -8,23 +8,25 @@ on:
 jobs:
   validate-rules:
     name: Validate Bioregistry Rules
-    # Skip this workflow for PRs created by the GitHub Actions bot
-    if: github.actor != 'github-actions[bot]'
+    # Don't skip the workflow entirely, as we want it to run and report success
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
-
+      # Always-pass path for GitHub Actions bot PRs
       - name: Auto-pass for GitHub Actions bot PRs
         if: github.actor == 'github-actions[bot]'
         run: |
           echo "PR was created by the GitHub Actions bot, automatically passing validation."
           exit 0
           
+      # Only run validation steps for human-created PRs
+      - name: Set up Python
+        if: github.actor != 'github-actions[bot]'
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
       - name: Install dependencies
         if: github.actor != 'github-actions[bot]'
         run: |
