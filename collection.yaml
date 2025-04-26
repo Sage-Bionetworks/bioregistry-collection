@@ -12,7 +12,7 @@
     linked on Synapse.org and affiliated data portals
   identifier: '0000016'
   name: Synapse.org external links
-resources:
+  resources:
   - agrkb
   - anzctr
   - arxiv
