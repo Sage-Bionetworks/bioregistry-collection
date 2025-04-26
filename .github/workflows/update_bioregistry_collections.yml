@@ -1,6 +1,10 @@
 name: Update Bioregistry Collections
 
 on:
+  # Run on push to main
+  push:
+    branches:
+      - main
   # Manual trigger
   workflow_dispatch:
 
@@ -24,6 +28,10 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install PyYAML requests
+
+      - name: Ensure for_bioregistry directory exists
+        run: |
+          mkdir -p for_bioregistry
 
       - name: Fetch upstream collections.json
         id: fetch
@@ -70,7 +78,7 @@ jobs:
               upstream_data['collections'].append(our_collection)
           
           # Write to our local collections.json file
-          with open('collections.json', 'w') as f:
+          with open('for_bioregistry/collections.json', 'w') as f:
               json.dump(upstream_data, f, indent=2)
           
           print('Successfully merged our collection with upstream collections.json')
@@ -89,7 +97,7 @@ jobs:
       - name: Commit changes
         id: commit
         run: |
-          git add collections.json
+          git add for_bioregistry/collections.json
           if git diff --staged --quiet; then
             echo "No changes to commit"
             echo "changes_detected=false" >> $GITHUB_OUTPUT

@@ -32,7 +32,7 @@ When changes are pushed to the main branch, two automated tasks run:
    - Opens a pull request with any changes
 
 ### Update Bioregistry Collections (`update_bioregistry_collections.yml`)
-This workflow can be manually triggered to create a local copy of the upstream bioregistry collections.json with our collection:
+This workflow runs automatically on every push to main and can also be manually triggered to create a local copy of the upstream bioregistry collections.json with our collection:
 1. **Fetch Upstream Collections**
    - Retrieves the latest collections.json from the upstream bioregistry repository
   
@@ -41,7 +41,7 @@ This workflow can be manually triggered to create a local copy of the upstream b
    - Merges our collection with the upstream collections data
    
 3. **Save Local Copy**
-   - Saves the merged collections.json to our repository
+   - Saves the merged collections.json to the `for_bioregistry` folder
    - Opens a pull request with the changes
 
 This creates a local reference that can be used when preparing PRs to the upstream repository manually.

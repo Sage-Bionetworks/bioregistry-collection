@@ -24,10 +24,12 @@ To submit your updates to the upstream bioregistry repository, follow these step
 
 ### 1. Run the Update Collections Workflow
 
+The workflow runs automatically on every push to the main branch, but you can also trigger it manually:
+
 1. Go to the Actions tab in this repository
 2. Select the "Update Bioregistry Collections" workflow
 3. Click "Run workflow" on the main branch
-4. Review and merge the PR that gets created with the updated `collections.json`
+4. Review and merge the PR that gets created with the updated `for_bioregistry/collections.json`
 
 ### 2. Create a Fork of the Upstream Repository
 
@@ -39,7 +41,7 @@ To submit your updates to the upstream bioregistry repository, follow these step
 1. In your fork, navigate to `src/bioregistry/data/collections.json`
 2. Click the pencil icon to edit the file
 3. Either:
-   - Use the contents of our local `collections.json` file (created by the workflow), or
+   - Use the contents of our local `for_bioregistry/collections.json` file, or
    - Manually find and update just our collection (ID: 0000016)
 4. Commit the changes to a new branch
 
