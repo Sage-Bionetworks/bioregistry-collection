@@ -129,7 +129,6 @@
   - iso.3166
   - isrctn
   - itis
-  - jax
   - jaxmice
   - jrct
   - kegg
@@ -145,7 +144,7 @@
   - mba
   - mesh
   - metabolights
-  - metacyc
+  - metacyc.compound
   - mgi
   - mir
   - mirbase
@@ -200,7 +199,7 @@
   - rpcec
   - rrrc
   - rxnorm
-  - sabiork
+  - ec
   - scop
   - sgd
   - signor
