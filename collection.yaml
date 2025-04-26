@@ -12,7 +12,6 @@
     linked on Synapse.org and affiliated data portals
   identifier: '0000016'
   name: Synapse.org external links
-Here's the formatted list ready to be copied directly into your collections.yaml file:
 resources:
   - agrkb
   - anzctr
