@@ -21,6 +21,7 @@
   - arxiv
   - atc
   - atcc
+  - bacdive
   - bfo
   - bgee.gene
   - biocyc
@@ -91,6 +92,7 @@
   - eupath
   - exac.variant
   - fairsharing
+  - flybase
   - fma
   - funderregistry
   - gard
@@ -219,9 +221,7 @@
   - wikigenes
   - wikipathways
   - wormbase
-  - bacdive
   - xenbase
-  - flybase
   - zenodo.record
   - zfin
   - zinc
