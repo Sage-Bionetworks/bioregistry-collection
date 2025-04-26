@@ -13,9 +13,9 @@
   identifier: '0000016'
   name: Synapse.org external links
   resources:
+  - anzctr
   - ado
   - agrkb
-  - anzctr
   - ark
   - arrayexpress
   - arxiv
