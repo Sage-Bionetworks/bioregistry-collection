@@ -31,6 +31,22 @@ When changes are pushed to the main branch, two automated tasks run:
    - Sorts the resources list in `collection.yaml` alphabetically
    - Opens a pull request with any changes
 
+### Update Bioregistry Collections (`update_bioregistry_collections.yml`)
+This workflow can be manually triggered to update the upstream bioregistry repository with our collection:
+1. **Convert YAML to JSON**
+   - Takes the collection.yaml and converts it to the JSON format required by the bioregistry repository
+  
+2. **Sync with Upstream**
+   - Forks the bioregistry repository if a fork doesn't exist
+   - Updates the fork with the latest changes from the upstream repository
+   - Creates a new branch with our changes
+   
+3. **Update and Submit PR**
+   - Updates the collections.json file with our collection data
+   - Creates a pull request to the upstream bioregistry repository
+
+**Note**: This workflow requires a `GH_PAT` secret with permissions to create forks and pull requests.
+
 ## Contributing
 
 ### Adding New Resources
