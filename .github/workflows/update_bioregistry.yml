@@ -24,7 +24,7 @@ jobs:
 
       - name: Generate bioregistry rules
         id: generate
-        run: python generate_bioregistry_rules.py
+        run: python generate_bioregistry_rules.py | tee validation.log
 
       - name: Check for issues
         if: failure()
@@ -86,7 +86,38 @@ jobs:
               message += 'Please check if these prefixes are correct or need to be registered.\n\n';
               hasIssues = true;
             }
-            
+
+            // Parse validation.log for missing resolver and deprecated resources
+            if (fs.existsSync('validation.log')) {
+              const log = fs.readFileSync('validation.log', 'utf8');
+              const missingResolverSection = log.split('Missing resolver for the following resources:')[1]?.split('Deprecated resources detected:')[0];
+              if (missingResolverSection) {
+                const missingResolver = missingResolverSection.trim().split('\n').filter(Boolean);
+                if (missingResolver.length > 0) {
+                  message += '### Missing Resolver\n\n';
+                  message += 'The following resources do not have a resolver (uri_format) in bioregistry.io:\n\n';
+                  message += '```\n';
+                  message += missingResolver.join('\n');
+                  message += '\n```\n\n';
+                  message += 'Please check if these resources should have a resolver or be removed.\n\n';
+                  hasIssues = true;
+                }
+              }
+              const deprecatedSection = log.split('Deprecated resources detected:')[1];
+              if (deprecatedSection) {
+                const deprecated = deprecatedSection.trim().split('\n').filter(Boolean);
+                if (deprecated.length > 0) {
+                  message += '### Deprecated Resources\n\n';
+                  message += 'The following resources are marked as deprecated in bioregistry.io:\n\n';
+                  message += '```\n';
+                  message += deprecated.join('\n');
+                  message += '\n```\n\n';
+                  message += 'Please check if these resources should be removed or replaced.\n\n';
+                  hasIssues = true;
+                }
+              }
+            }
+
             if (hasIssues) {
               github.rest.issues.createComment({
                 issue_number: context.issue.number,
