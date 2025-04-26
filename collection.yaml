@@ -77,6 +77,7 @@
   - drugbank
   - drugcentral
   - duo
+  - ec
   - ecacc
   - edam
   - ega.dataset
@@ -199,7 +200,6 @@
   - rpcec
   - rrrc
   - rxnorm
-  - ec
   - scop
   - sgd
   - signor

@@ -261,6 +261,10 @@ export const bioregistryRules = [
     onMatch,
   },
   {
+    regex: /(ec:\d{1,2}(((\.\d{1,3}){1,3})|(\.\d+){2}\.[nB]\d{1,3}|\.-\.-\.-|\.\d{1,3}\.-\.-|\.\d{1,3}\.\d{1,3}\.-)?)/,
+    onMatch,
+  },
+  {
     regex: /(ecacc:\d+)/,
     onMatch,
   },
@@ -469,10 +473,6 @@ export const bioregistryRules = [
     onMatch,
   },
   {
-    regex: /(jax:\d{6})/,
-    onMatch,
-  },
-  {
     regex: /(jaxmice:\d+)/,
     onMatch,
   },
@@ -533,7 +533,7 @@ export const bioregistryRules = [
     onMatch,
   },
   {
-    regex: /(metacyc:[A-Za-z0-9+_.%-:]+)/,
+    regex: /(metacyc.compound:[A-Za-z0-9+_.%-:]+)/,
     onMatch,
   },
   {
@@ -750,10 +750,6 @@ export const bioregistryRules = [
   },
   {
     regex: /(rxnorm:[0-9]{1,7})/,
-    onMatch,
-  },
-  {
-    regex: /(sabiork:\d+)/,
     onMatch,
   },
   {
