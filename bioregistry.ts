@@ -41,19 +41,19 @@ export const bioregistryRules = [
     onMatch,
   },
   {
-    regex: /(biorxiv:(\d{4}\.\d{2}\.\d{2}\.)?\d{6,8}(v\d{1,3})?)/,
-    onMatch,
-  },
-  {
-    regex: /(biostudies:S-[A-Z]{4}[\-\_A-Z\d]+)/,
-    onMatch,
-  },
-  {
     regex: /(bioproject:PRJ[DEN][A-Z]\d+)/,
     onMatch,
   },
   {
+    regex: /(biorxiv:(\d{4}\.\d{2}\.\d{2}\.)?\d{6,8}(v\d{1,3})?)/,
+    onMatch,
+  },
+  {
     regex: /(biosample:SAM[NED](\w)?\d+)/,
+    onMatch,
+  },
+  {
+    regex: /(biostudies:S-[A-Z]{4}[\-\_A-Z\d]+)/,
     onMatch,
   },
   {
@@ -581,15 +581,15 @@ export const bioregistryRules = [
     onMatch,
   },
   {
-    regex: /(wikipathways:WP\d{1,5}(\_r\d+)?)/,
-    onMatch,
-  },
-  {
     regex: /(wikidata:(Q|P|E|L)\d+)/,
     onMatch,
   },
   {
     regex: /(wikigenes:\d+)/,
+    onMatch,
+  },
+  {
+    regex: /(wikipathways:WP\d{1,5}(\_r\d+)?)/,
     onMatch,
   },
   {
