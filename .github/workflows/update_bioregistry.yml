@@ -24,7 +24,9 @@ jobs:
 
       - name: Generate bioregistry rules
         id: generate
-        run: python generate_bioregistry_rules.py | tee validation.log
+        run: |
+          python generate_bioregistry_rules.py 2>&1 | tee validation.log
+          exit ${PIPESTATUS[0]}
 
       - name: Check for issues
         if: failure()
