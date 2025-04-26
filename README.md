@@ -32,22 +32,23 @@ When changes are pushed to the main branch, two automated tasks run:
    - Opens a pull request with any changes
 
 ### Update Bioregistry Collections (`update_bioregistry_collections.yml`)
-This workflow can be manually triggered to update the upstream bioregistry repository with our collection:
-1. **Convert YAML to JSON**
-   - Takes the collection.yaml and converts it to the JSON format required by the bioregistry repository
+This workflow can be manually triggered to create a local copy of the upstream bioregistry collections.json with our collection:
+1. **Fetch Upstream Collections**
+   - Retrieves the latest collections.json from the upstream bioregistry repository
   
-2. **Sync with Upstream**
-   - Forks the bioregistry repository if a fork doesn't exist
-   - Updates the fork with the latest changes from the upstream repository
-   - Creates a new branch with our changes
+2. **Convert and Merge**
+   - Converts our collection.yaml to the JSON format used by bioregistry
+   - Merges our collection with the upstream collections data
    
-3. **Update and Submit PR**
-   - Updates the collections.json file with our collection data
-   - Creates a pull request to the upstream bioregistry repository
+3. **Save Local Copy**
+   - Saves the merged collections.json to our repository
+   - Opens a pull request with the changes
 
-**Note**: This workflow requires a `GH_PAT` secret with permissions to create forks and pull requests.
+This creates a local reference that can be used when preparing PRs to the upstream repository manually.
 
 ## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines on how to contribute to this repository and update the upstream bioregistry repository.
 
 ### Adding New Resources
 

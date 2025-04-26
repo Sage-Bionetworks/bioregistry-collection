@@ -14,8 +14,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-        with:
-          path: collection-repo
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -27,9 +25,14 @@ jobs:
           python -m pip install --upgrade pip
           pip install PyYAML requests
 
-      - name: Convert YAML to JSON
+      - name: Fetch upstream collections.json
+        id: fetch
+        run: |
+          curl -s https://raw.githubusercontent.com/biopragmatics/bioregistry/main/src/bioregistry/data/collections.json -o upstream_collections.json
+          echo "Successfully fetched upstream collections.json"
+
+      - name: Convert YAML to JSON and merge with upstream
         id: convert
-        working-directory: collection-repo
         run: |
           python -c "
           import yaml
@@ -40,142 +43,67 @@ jobs:
           with open('collection.yaml', 'r') as f:
               collection_data = yaml.safe_load(f)
           
-          # Format into the expected collections.json structure
-          collections_json = {
-              'collections': [
-                  {
-                      'authors': collection_data['00000016']['authors'],
-                      'description': collection_data['00000016']['description'],
-                      'identifier': collection_data['00000016']['identifier'],
-                      'name': collection_data['00000016']['name'],
-                      'resources': collection_data['00000016']['resources']
-                  }
-              ]
+          # Format our collection into the expected structure
+          our_collection = {
+              'authors': collection_data['00000016']['authors'],
+              'description': collection_data['00000016']['description'],
+              'identifier': collection_data['00000016']['identifier'],
+              'name': collection_data['00000016']['name'],
+              'resources': collection_data['00000016']['resources']
           }
           
-          # Write to a temporary file
-          with open('../collection_formatted.json', 'w') as f:
-              json.dump(collections_json, f, indent=2)
-          
-          print('Successfully converted YAML to JSON')
-          "
-          echo "json_file=../collection_formatted.json" >> $GITHUB_OUTPUT
-
-      - name: Setup Git
-        run: |
-          git config --global user.name "GitHub Actions Bot"
-          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
-
-      - name: Check if fork exists
-        id: check_fork
-        env:
-          # Use a PAT with appropriate permissions
-          GH_PAT: ${{ secrets.GH_PAT }}
-        run: |
-          FORK_EXISTS=$(curl -s -o /dev/null -w "%{http_code}" -H "Authorization: token $GH_PAT" \
-            https://api.github.com/repos/Sage-Bionetworks/bioregistry)
-          
-          if [ "$FORK_EXISTS" == "200" ]; then
-            echo "exists=true" >> $GITHUB_OUTPUT
-          else
-            echo "exists=false" >> $GITHUB_OUTPUT
-          fi
-
-      - name: Create fork if not exists
-        if: steps.check_fork.outputs.exists == 'false'
-        env:
-          GH_PAT: ${{ secrets.GH_PAT }}
-        run: |
-          # Create a fork of the upstream repository
-          curl -X POST -H "Authorization: token $GH_PAT" \
-            -H "Accept: application/vnd.github.v3+json" \
-            https://api.github.com/repos/biopragmatics/bioregistry/forks \
-            -d '{"organization":"Sage-Bionetworks"}'
-          
-          # Wait for fork to be created
-          sleep 30
-
-      - name: Clone bioregistry fork
-        env:
-          GH_PAT: ${{ secrets.GH_PAT }}
-        run: |
-          git clone https://x-access-token:${GH_PAT}@github.com/Sage-Bionetworks/bioregistry.git fork-repo
-
-      - name: Sync fork with upstream
-        working-directory: fork-repo
-        env:
-          GH_PAT: ${{ secrets.GH_PAT }}
-        run: |
-          git remote add upstream https://github.com/biopragmatics/bioregistry.git
-          git fetch upstream
-          git checkout main
-          git merge upstream/main
-          git push origin main
-
-      - name: Create branch
-        working-directory: fork-repo
-        run: |
-          BRANCH_NAME="update-collections-$(date +%Y%m%d-%H%M%S)"
-          git checkout -b $BRANCH_NAME
-          echo "BRANCH_NAME=$BRANCH_NAME" >> $GITHUB_ENV
-
-      - name: Update collections.json
-        working-directory: fork-repo
-        run: |
-          # Copy the generated JSON file
-          python -c "
-          import json
-          import os
-          
-          # Load our converted collection
-          with open('${{ steps.convert.outputs.json_file }}', 'r') as f:
-              our_collection = json.load(f)
-          
-          # Load the existing collections.json
-          with open('src/bioregistry/data/collections.json', 'r') as f:
-              collections_data = json.load(f)
+          # Load the upstream collections.json
+          with open('upstream_collections.json', 'r') as f:
+              upstream_data = json.load(f)
           
           # Find and replace or add our collection
-          our_id = our_collection['collections'][0]['identifier']
+          our_id = our_collection['identifier']
           found = False
           
-          for i, collection in enumerate(collections_data['collections']):
+          for i, collection in enumerate(upstream_data['collections']):
               if collection['identifier'] == our_id:
-                  collections_data['collections'][i] = our_collection['collections'][0]
+                  upstream_data['collections'][i] = our_collection
                   found = True
                   break
           
           if not found:
-              collections_data['collections'].append(our_collection['collections'][0])
+              upstream_data['collections'].append(our_collection)
           
-          # Write back the updated collections.json
-          with open('src/bioregistry/data/collections.json', 'w') as f:
-              json.dump(collections_data, f, indent=2)
+          # Write to our local collections.json file
+          with open('collections.json', 'w') as f:
+              json.dump(upstream_data, f, indent=2)
           
-          print('Successfully updated collections.json')
+          print('Successfully merged our collection with upstream collections.json')
           "
 
-      - name: Commit and push changes
-        working-directory: fork-repo
-        env:
-          GH_PAT: ${{ secrets.GH_PAT }}
+      - name: Configure Git
         run: |
-          git add src/bioregistry/data/collections.json
-          git commit -m "Update collection 0000016 from Sage-Bionetworks/bioregistry-collection"
-          git push -u origin $BRANCH_NAME
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+
+      - name: Commit changes
+        id: commit
+        run: |
+          git add collections.json
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+            echo "changes_detected=false" >> $GITHUB_OUTPUT
+          else
+            git commit -m "Update collections.json with latest upstream data"
+            echo "changes_detected=true" >> $GITHUB_OUTPUT
+          fi
 
       - name: Create Pull Request
-        env:
-          GH_PAT: ${{ secrets.GH_PAT }}
-        run: |
-          PR_RESPONSE=$(curl -X POST -H "Authorization: token $GH_PAT" \
-            -H "Accept: application/vnd.github.v3+json" \
-            https://api.github.com/repos/biopragmatics/bioregistry/pulls \
-            -d '{
-              "title": "Update collection 0000016 from Sage-Bionetworks/bioregistry-collection",
-              "body": "This PR updates the Synapse.org external links collection (ID: 0000016) with the latest resources from the [Sage-Bionetworks/bioregistry-collection](https://github.com/Sage-Bionetworks/bioregistry-collection) repository.",
-              "head": "Sage-Bionetworks:${{ env.BRANCH_NAME }}",
-              "base": "main"
-            }')
-          
-          echo "Created PR: $PR_RESPONSE" 
+        uses: peter-evans/create-pull-request@v6
+        if: steps.commit.outputs.changes_detected == 'true'
+        with:
+          title: "Update collections.json with latest upstream data"
+          body: |
+            This PR updates our local copy of collections.json with the latest upstream data and our collection.
+            
+            - Fetched latest collections.json from the upstream bioregistry repository
+            - Added/updated our collection (ID: 0000016)
+            
+            This file can be used as a reference when preparing PRs to the upstream repository.
+          branch: update-collections
+          delete-branch: true 
