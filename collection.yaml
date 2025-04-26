@@ -97,6 +97,7 @@
   - ndfrt
   - nucc.taxonomy
   - omim
+  - orcid
   - orphanet
   - orphanet.ordo
   - pactr
@@ -140,4 +141,3 @@
   - wormbase
   - xenbase
   - zfin
-  - orcid
