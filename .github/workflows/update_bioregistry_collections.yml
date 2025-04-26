@@ -77,9 +77,9 @@ jobs:
           if not found:
               upstream_data['collections'].append(our_collection)
           
-          # Write to our local collections.json file
-          with open('for_bioregistry/collections.json', 'w') as f:
-              json.dump(upstream_data, f, indent=2)
+          # Write to our local collections.json file with proper Unicode handling
+          with open('for_bioregistry/collections.json', 'w', encoding='utf-8') as f:
+              json.dump(upstream_data, f, indent=2, ensure_ascii=False)
           
           print('Successfully merged our collection with upstream collections.json')
           "
