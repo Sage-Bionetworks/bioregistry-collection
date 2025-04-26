@@ -199,3 +199,47 @@
   - kegg.drug
   - kegg.disease
   - kegg.glycan
+  - chemspider
+  - ado
+  - zinc
+  - osf
+  - omop
+  - ccle
+  - duo
+  - ncit
+  - cadsr
+  - ror
+  - clinicaltrials
+  - cosmic
+  - cosmic.cell
+  - cran
+  - dbgap
+  - dbsnp
+  - depmap
+  - drugcentral
+  - ecacc
+  - edam
+  - ega.dataset
+  - ega.study
+  - fairsharing
+  - funderregistry
+  - gdc
+  - genbank
+  - genecards
+  - hp
+  - icd9
+  - icd10
+  - icd11
+  - inchi
+  - inchikey
+  - insdc
+  - jax
+  - jaxmice
+  - mir
+  - ark
+  - refseq
+  - rfc
+  - rrrc
+  - stitch
+  - ucsc
+  
