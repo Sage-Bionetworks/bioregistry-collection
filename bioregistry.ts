@@ -417,6 +417,10 @@ export const bioregistryRules = [
     onMatch,
   },
   {
+    regex: /(icdc:\d{6})/,
+    onMatch,
+  },
+  {
     regex: /(icf:\d+)/,
     onMatch,
   },
@@ -634,6 +638,10 @@ export const bioregistryRules = [
   },
   {
     regex: /(pdb.ligand:[A-Za-z0-9]+)/,
+    onMatch,
+  },
+  {
+    regex: /(pdc.study:PDC\d+)/,
     onMatch,
   },
   {

@@ -13,13 +13,11 @@
   identifier: '0000016'
   name: Synapse.org external links
   resources:
-  - icdc
-  - arrayexpress
-  - pdc.study
   - ado
   - agrkb
   - anzctr
   - ark
+  - arrayexpress
   - arxiv
   - atc
   - atcc
@@ -118,6 +116,7 @@
   - icd10
   - icd11
   - icd9
+  - icdc
   - icf
   - idr
   - imgt.hla
@@ -173,6 +172,7 @@
   - pdb
   - pdb-ccd
   - pdb.ligand
+  - pdc.study
   - peco
   - peptideatlas.dataset
   - pfam
