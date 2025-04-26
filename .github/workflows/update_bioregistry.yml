@@ -114,7 +114,7 @@ jobs:
                 const deprecated = deprecatedMatch[1].trim().split('\n').filter(Boolean);
                 if (deprecated.length > 0) {
                   message += '### Deprecated Resources (Warning)\n\n';
-                  message += 'The following resources are marked as deprecated in bioregistry.io:\n\n';
+                  message += 'The following resources or prefixes are marked as deprecated in bioregistry.io:\n\n';
                   message += '```\n';
                   message += deprecated.join('\n');
                   message += '\n```\n\n';

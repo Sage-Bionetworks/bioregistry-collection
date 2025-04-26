@@ -134,7 +134,6 @@
   - pharmgkb.pathways
   - pmc
   - pombase
-  - pride
   - pubchem.compound
   - pubmed
   - px
@@ -164,3 +163,67 @@
   - xenbase
   - zenodo.record
   - zfin
+  - kegg
+  - string
+  - ensembl.metazoa
+  - ensembl.fungi
+  - ensembl.plant
+  - arrayexpress
+  - metacyc
+  - genecards
+  - intact
+  - rnacentral
+  - cath
+  - tcdb
+  - mirbase
+  - biogrid
+  - bgee.gene
+  - gramene.gene
+  - gramene.protein
+  - gramene.growthstage
+  - tao
+  - peco
+  - uniprot.isoform
+  - uniprot.proteome
+  - uniref
+  - uniparc
+  - nextprot
+  - cdd
+  - pfam.clan
+  - rfam
+  - disprot
+  - pdb.ligand
+  - sabiork
+  - signor
+  - complexportal
+  - kegg.drug
+  - kegg.disease
+  - kegg.glycan
+  - chemspider
+  - ado
+  - zinc
+  - osf
+  - omop
+  - duo
+  - cadsr
+  - ror
+  - cosmic.cell
+  - dbgap
+  - drugcentral
+  - ecacc
+  - edam
+  - fairsharing
+  - funderregistry
+  - gdc
+  - icd11
+  - inchi
+  - inchikey
+  - insdc
+  - jax
+  - jaxmice
+  - mir
+  - ark
+  - rfc
+  - rrrc
+  - stitch
+  
