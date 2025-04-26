@@ -793,10 +793,6 @@ export const bioregistryRules = [
     onMatch,
   },
   {
-    regex: /(tctr:TCTR\d+)/,
-    onMatch,
-  },
-  {
     regex: /(uberon:\d+)/,
     onMatch,
   },
