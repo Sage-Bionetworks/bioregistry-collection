@@ -22,10 +22,10 @@
   - bfo
   - biocyc
   - bioportal
-  - biorxiv
-  - biostudies
   - bioproject
+  - biorxiv
   - biosample
+  - biostudies
   - bmrb
   - brenda
   - brenda.ligand
@@ -49,6 +49,7 @@
   - clinvar.record
   - cosmic
   - cpt
+  - creativebiolabs.antibody
   - ctd.chemical
   - ctis
   - ctri
@@ -169,11 +170,10 @@
   - uminctr
   - unii
   - uniprot
-  - wikipathways
   - wikidata
   - wikigenes
+  - wikipathways
   - wormbase
   - xenbase
   - zenodo.record
   - zfin
-  - creativebiolabs.antibody
