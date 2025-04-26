@@ -341,6 +341,10 @@ export const bioregistryRules = [
     onMatch,
   },
   {
+    regex: /(orcid:\d{4}-\d{4}-\d{4}-\d{3}(\d|X))/,
+    onMatch,
+  },
+  {
     regex: /(orphanet:\d+)/,
     onMatch,
   },
@@ -510,10 +514,6 @@ export const bioregistryRules = [
   },
   {
     regex: /(zfin:ZDB\-\w+\-\d+\-\d+)/,
-    onMatch,
-  },
-  {
-    regex: /(orcid:\d{4}-\d{4}-\d{4}-\d{3}(\d|X))/,
     onMatch,
   },
 ]
