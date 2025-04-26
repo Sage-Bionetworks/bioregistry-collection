@@ -48,7 +48,7 @@ jobs:
           fi
 
       - name: Create Pull Request Comment
-        if: failure()
+        if: always()
         uses: actions/github-script@v7
         with:
           script: |
@@ -109,18 +109,17 @@ jobs:
               if (deprecatedSection) {
                 const deprecated = deprecatedSection.trim().split('\n').filter(Boolean);
                 if (deprecated.length > 0) {
-                  message += '### Deprecated Resources\n\n';
+                  message += '### Deprecated Resources (Warning)\n\n';
                   message += 'The following resources are marked as deprecated in bioregistry.io:\n\n';
                   message += '```\n';
                   message += deprecated.join('\n');
                   message += '\n```\n\n';
                   message += 'Please check if these resources should be removed or replaced.\n\n';
-                  hasIssues = true;
                 }
               }
             }
 
-            if (hasIssues) {
+            if (hasIssues || message !== '## Bioregistry Collection Issues\n\n') {
               github.rest.issues.createComment({
                 issue_number: context.issue.number,
                 owner: context.repo.owner,
