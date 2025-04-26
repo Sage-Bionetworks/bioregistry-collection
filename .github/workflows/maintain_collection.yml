@@ -9,6 +9,7 @@ on:
 permissions:
   contents: write
   pull-requests: write
+  actions: write  # Required to trigger other workflows
 
 jobs:
   maintain-collection:
@@ -52,6 +53,25 @@ jobs:
             - Alphabetizes the resources in collection.yaml
             - Updates bioregistry.ts with the latest link rules
           labels: automated, maintenance
+      
+      # Explicitly force the validation check to run by dispatching it
+      - name: Manually trigger validation workflow
+        if: steps.cpr.outputs.pull-request-number
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            await github.rest.actions.createWorkflowDispatch({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              workflow_id: 'update_bioregistry.yml',
+              ref: 'auto/maintain-collection'
+            });
+            console.log('Manually triggered validation workflow on the PR branch');
+      
+      - name: Wait for checks to complete
+        if: steps.cpr.outputs.pull-request-number
+        run: sleep 30  # Give time for the validation to start
       
       - name: Enable auto-merge for PR
         if: steps.cpr.outputs.pull-request-number
