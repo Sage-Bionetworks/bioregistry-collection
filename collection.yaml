@@ -13,14 +13,19 @@
   identifier: '0000016'
   name: Synapse.org external links
   resources:
+  - ado
   - agrkb
   - anzctr
+  - ark
+  - arrayexpress
   - arxiv
   - atc
   - atcc
   - bacdive
   - bfo
+  - bgee.gene
   - biocyc
+  - biogrid
   - bioportal
   - bioproject
   - biorxiv
@@ -31,11 +36,15 @@
   - brenda.ligand
   - brenda.ligandgroup
   - bto
+  - cadsr
+  - cath
   - cbioportal
+  - cdd
   - cellimage
   - chebi
   - chembl
   - chembl.compound
+  - chemspider
   - civic.aid
   - civic.did
   - civic.eid
@@ -46,37 +55,55 @@
   - clinicaltrials
   - clinvar
   - clinvar.record
+  - complexportal
   - cosmic
+  - cosmic.cell
   - cpt
   - ctd.chemical
   - ctis
   - ctri
   - cvx
+  - dbgap
   - dbsnp
   - decipher
   - depmap
   - dhba
   - dicom
+  - disprot
   - dmba
   - doi
   - doid
   - drks
   - drugbank
+  - drugcentral
+  - duo
+  - ecacc
+  - edam
   - ega.dataset
   - ega.study
   - emdb
   - empiar
   - ena.embl
   - ensembl
+  - ensembl.fungi
+  - ensembl.metazoa
+  - ensembl.plant
   - euclinicaltrials
   - eupath
   - exac.variant
+  - fairsharing
   - flybase
   - fma
+  - funderregistry
   - gard
   - gbif
+  - gdc
+  - genecards
   - geo
   - go
+  - gramene.gene
+  - gramene.growthstage
+  - gramene.protein
   - gtdb
   - hba
   - hc.npn
@@ -87,17 +114,28 @@
   - hmdb
   - hp
   - icd10
+  - icd11
   - icd9
   - icf
   - idr
   - imgt.hla
+  - inchi
+  - inchikey
+  - insdc
   - insdc.sra
+  - intact
   - interpro
   - iso.3166
   - isrctn
   - itis
+  - jax
+  - jaxmice
   - jrct
+  - kegg
   - kegg.compound
+  - kegg.disease
+  - kegg.drug
+  - kegg.glycan
   - kegg.pathway
   - kegg.reaction
   - loinc
@@ -106,7 +144,10 @@
   - mba
   - mesh
   - metabolights
+  - metacyc
   - mgi
+  - mir
+  - mirbase
   - mondo
   - ncbigene
   - ncbiprotein
@@ -114,11 +155,14 @@
   - ncit
   - ndc
   - ndfrt
+  - nextprot
   - nord
   - omim
+  - omop
   - orcid
   - orphanet
   - orphanet.ordo
+  - osf
   - panther.family
   - panther.node
   - panther.pathway
@@ -126,8 +170,11 @@
   - pba
   - pdb
   - pdb-ccd
+  - pdb.ligand
+  - peco
   - peptideatlas.dataset
   - pfam
+  - pfam.clan
   - pharmgkb.disease
   - pharmgkb.drug
   - pharmgkb.gene
@@ -142,20 +189,35 @@
   - rebec
   - refseq
   - repec
+  - rfam
+  - rfc
   - rgd
   - rhea
+  - rnacentral
+  - ror
   - rpcec
+  - rrrc
   - rxnorm
+  - sabiork
   - scop
   - sgd
+  - signor
   - snomedct
   - so
   - ssbd.dataset
   - ssbd.project
+  - stitch
+  - string
+  - tao
+  - tcdb
   - tctr
   - uberon
   - unii
+  - uniparc
   - uniprot
+  - uniprot.isoform
+  - uniprot.proteome
+  - uniref
   - wikidata
   - wikigenes
   - wikipathways
@@ -163,67 +225,4 @@
   - xenbase
   - zenodo.record
   - zfin
-  - kegg
-  - string
-  - ensembl.metazoa
-  - ensembl.fungi
-  - ensembl.plant
-  - arrayexpress
-  - metacyc
-  - genecards
-  - intact
-  - rnacentral
-  - cath
-  - tcdb
-  - mirbase
-  - biogrid
-  - bgee.gene
-  - gramene.gene
-  - gramene.protein
-  - gramene.growthstage
-  - tao
-  - peco
-  - uniprot.isoform
-  - uniprot.proteome
-  - uniref
-  - uniparc
-  - nextprot
-  - cdd
-  - pfam.clan
-  - rfam
-  - disprot
-  - pdb.ligand
-  - sabiork
-  - signor
-  - complexportal
-  - kegg.drug
-  - kegg.disease
-  - kegg.glycan
-  - chemspider
-  - ado
   - zinc
-  - osf
-  - omop
-  - duo
-  - cadsr
-  - ror
-  - cosmic.cell
-  - dbgap
-  - drugcentral
-  - ecacc
-  - edam
-  - fairsharing
-  - funderregistry
-  - gdc
-  - icd11
-  - inchi
-  - inchikey
-  - insdc
-  - jax
-  - jaxmice
-  - mir
-  - ark
-  - rfc
-  - rrrc
-  - stitch
-  
