@@ -72,3 +72,7 @@ If your PR fails validation, check the PR comments for:
 5. **Deprecated Resources**
    - The prefix is marked as deprecated in bioregistry.io
    - Solution: Remove the deprecated prefix from the PR or replace it with a valid one
+
+## Acknowledgements
+
+For more info about Bioregistry please see Hoyt, C. T., et al. (2022) [Unifying the identification of biomedical entities with the Bioregistry.](https://www.nature.com/articles/s41597-022-01807-3) Nature Scientific Data, s41597-022-01807-3.
