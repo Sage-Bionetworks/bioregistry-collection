@@ -176,6 +176,4 @@
   - xenbase
   - zenodo.record
   - zfin
-  - bams
-  - zfin
-  - zfin
+  - creativebiolabs.antibody
