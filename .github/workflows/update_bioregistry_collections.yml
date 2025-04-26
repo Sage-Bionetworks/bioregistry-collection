@@ -76,6 +76,11 @@ jobs:
           print('Successfully merged our collection with upstream collections.json')
           "
 
+      - name: Clean up temporary files
+        run: |
+          rm -f upstream_collections.json
+          echo "Removed temporary upstream_collections.json file"
+
       - name: Configure Git
         run: |
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
