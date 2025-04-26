@@ -16,12 +16,16 @@
   - agrkb
   - anzctr
   - arxiv
+  - atc
   - atcc
   - bacdive
   - bfo
+  - biocyc
   - bioportal
   - biorxiv
   - biostudies
+  - bioproject
+  - biosample
   - bmrb
   - brenda
   - brenda.ligand
@@ -31,6 +35,7 @@
   - cellimage
   - chebi
   - chembl
+  - chembl.compound
   - chictr
   - civic.aid
   - civic.did
@@ -44,14 +49,20 @@
   - clinvar.record
   - cosmic
   - cpt
+  - ctd.chemical
   - ctis
   - ctri
   - cvx
   - dbsnp
+  - decipher
+  - depmap
   - dhba
   - dicom
   - dmba
+  - doi
+  - doid
   - drks
+  - drugbank
   - dsm5
   - ega.dataset
   - ega.study
@@ -61,10 +72,14 @@
   - ensembl
   - euclinicaltrials
   - eupath
+  - exac.variant
   - flybase
+  - fma
+  - gard
   - gbif
   - geo
   - go
+  - gtdb
   - hba
   - hc.din
   - hc.npn
@@ -72,6 +87,8 @@
   - hgnc
   - hl7.v2codesystem
   - hl7.v3codesystem
+  - hmdb
+  - hp
   - icd10
   - icd9
   - icf
@@ -83,18 +100,29 @@
   - irct
   - iso.3166
   - isrctn
+  - itis
   - itmctr
   - jrct
   - kcris
+  - kegg.compound
+  - kegg.pathway
+  - kegg.reaction
   - lbctr
   - loinc
   - lrg
   - massive
   - mba
+  - mesh
+  - metabolights
   - mgi
+  - mondo
+  - ncbigene
+  - ncbiprotein
+  - ncbitaxon
   - ncit
   - ndc
   - ndfrt
+  - nord
   - nucc.taxonomy
   - omim
   - orcid
@@ -107,7 +135,9 @@
   - panther.pthcmp
   - pba
   - pdb
+  - pdb-ccd
   - peptideatlas.dataset
+  - pfam
   - pharmgkb.disease
   - pharmgkb.drug
   - pharmgkb.gene
@@ -115,6 +145,7 @@
   - pmc
   - pombase
   - pride
+  - pubchem.compound
   - pubmed
   - px
   - radlex
@@ -126,6 +157,7 @@
   - rhea
   - rpcec
   - rxnorm
+  - scop
   - sgd
   - slctr
   - snomedct
@@ -133,11 +165,15 @@
   - ssbd.dataset
   - ssbd.project
   - tctr
+  - uberon
   - uminctr
   - unii
   - uniprot
+  - wikipathways
   - wikidata
   - wikigenes
   - wormbase
   - xenbase
+  - zenodo.record
   - zfin
+  - bams
