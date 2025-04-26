@@ -1,0 +1,52 @@
+name: Auto-Approve Bot PRs
+
+on:
+  pull_request_target:
+    types: [opened, synchronize]
+
+jobs:
+  auto-approve-bot-prs:
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.user.login == 'github-actions[bot]'
+    permissions:
+      pull-requests: write
+      checks: write
+      contents: write
+    steps:
+      - name: Debug Info
+        run: |
+          echo "PR Creator: ${{ github.event.pull_request.user.login }}"
+          echo "PR Title: ${{ github.event.pull_request.title }}"
+          echo "PR Branch: ${{ github.event.pull_request.head.ref }}"
+
+      - name: Auto-approve PR
+        uses: hmarr/auto-approve-action@v3
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Add 'approved-by-bot' label
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            github.rest.issues.addLabels({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              labels: ['approved-by-bot']
+            })
+
+      - name: Success Status
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            // Create a success status for 'Validate Bioregistry Rules'
+            github.rest.repos.createCommitStatus({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              sha: context.payload.pull_request.head.sha,
+              state: 'success',
+              description: 'Auto-approved for github-actions bot',
+              context: 'Validate Bioregistry Rules'
+            }) 
