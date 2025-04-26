@@ -25,30 +25,20 @@ def trim_regex(regex):
         regex = regex[:-1]
     return regex
 
-def js_regex_pattern(py_pattern):
-    # Convert Python regex string to JS regex literal (single backslashes)
-    return py_pattern.replace('\\\\', '\\').replace('\\', '\\')
-
 def find_duplicates(resources):
-    # Count occurrences of each resource
     counts = Counter(resources)
-    # Return only resources that appear more than once
     return [resource for resource, count in counts.items() if count > 1]
 
 def generate_typescript_file():
-    # Read the collection.yaml file
     with open("collection.yaml", "r") as file:
         collection = yaml.safe_load(file)
 
     resources = collection["00000016"]["resources"]
-    
-    # Check for duplicates
     duplicates = find_duplicates(resources)
     if duplicates:
         with open("duplicates.txt", "w") as file:
             file.write("\n".join(duplicates))
 
-    # Start generating the TypeScript file
     ts_content = """// This file is auto-generated. Do not edit manually.
 // Generated from bioregistry.io API based on collection.yaml
 
@@ -57,39 +47,28 @@ const onMatch = (value: string) => `https://bioregistry.io/${value}`;
 export const bioregistryRules = [
 """
 
-    # Track resources with missing patterns and invalid prefixes
     missing_patterns = []
     invalid_prefixes = []
 
-    # Process each resource
     for resource in resources:
         regex, prefix_exists = fetch_regex(resource)
         if not prefix_exists:
             invalid_prefixes.append(resource)
             continue
-        
         if regex:
             trimmed_regex = trim_regex(regex)
             if trimmed_regex:
-                js_pattern = js_regex_pattern(trimmed_regex)
-                ts_content += f"""  {{
-    regex: /({resource}:{js_pattern})/,
-    onMatch,
-  }},
-"""
+                ts_content += f"  {{\n    regex: /({resource}:{trimmed_regex})/,\n    onMatch,\n  }},\n"
             else:
                 missing_patterns.append(resource)
         else:
             missing_patterns.append(resource)
 
-    # Close the array
     ts_content += "]\n"
 
-    # Write the TypeScript file
     with open("bioregistry.ts", "w") as file:
         file.write(ts_content)
 
-    # If there are issues, write them to files for the workflow
     has_issues = False
     if missing_patterns:
         with open("missing_patterns.txt", "w") as file:
@@ -102,7 +81,7 @@ export const bioregistryRules = [
             file.write("\n".join(invalid_prefixes))
         has_issues = True
 
-    return not has_issues  # Return True if no issues, False if there are issues
+    return not has_issues
 
 if __name__ == "__main__":
     success = generate_typescript_file()
