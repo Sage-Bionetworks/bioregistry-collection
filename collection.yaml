@@ -13,6 +13,7 @@
   identifier: '0000016'
   name: Synapse.org external links
   resources:
+  - pubmed
   - ado
   - agrkb
   - anzctr
