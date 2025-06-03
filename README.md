@@ -48,8 +48,6 @@ This creates a local reference that can be used when preparing PRs to the upstre
 
 ## Contributing
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines on how to contribute to this repository and update the upstream bioregistry repository.
-
 ### Adding New Resources
 
 To add a new resource to the collection:
