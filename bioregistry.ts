@@ -473,7 +473,7 @@ export const bioregistryRules = [
     onMatch,
   },
   {
-    regex: /(jaxmice:\d+)/,
+    regex: /(jaxmice:\d{6})/,
     onMatch,
   },
   {
@@ -597,7 +597,7 @@ export const bioregistryRules = [
     onMatch,
   },
   {
-    regex: /(orphanet:\d+)/,
+    regex: /(orphanet:C?\d+)/,
     onMatch,
   },
   {
