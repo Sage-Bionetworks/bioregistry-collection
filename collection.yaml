@@ -40,6 +40,8 @@
   - cbioportal
   - cdd
   - cellimage
+  - cellxgene.collection
+  - cellxgene.dataset
   - chebi
   - chembl
   - chembl.compound
