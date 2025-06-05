@@ -17,10 +17,6 @@ export const bioregistryRules = [
     onMatch,
   },
   {
-    regex: /(ark:/*[0-9A-Za-z]+(?:/[\w/.=*+@\$-]*)?(?:\?.*)?)/,
-    onMatch,
-  },
-  {
     regex: /(arrayexpress:[AEP]-\w{4}-\d+)/,
     onMatch,
   },
