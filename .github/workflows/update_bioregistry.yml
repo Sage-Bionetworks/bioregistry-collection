@@ -107,20 +107,6 @@ jobs:
                 }
               }
               
-              // Extract URL resolution test results
-              const urlResolutionMatch = log.match(/--- URL Resolution Test Report ---\s+([\s\S]*?)----------------------------------/);
-              if (urlResolutionMatch && urlResolutionMatch[1]) {
-                const urlResolutionReport = urlResolutionMatch[1].trim();
-                if (urlResolutionReport && !urlResolutionReport.includes('All example URLs resolved successfully')) {
-                  message += '### URL Resolution Test Results (Informational)\n\n';
-                  message += 'The following URLs had resolution issues. This is for informational purposes only and does not block the PR:\n\n';
-                  message += '```\n';
-                  message += urlResolutionReport;
-                  message += '\n```\n\n';
-                  message += 'Note: These failures are often due to API rate limits, SSL issues, or temporary server problems and may not indicate actual issues with the CURIEs themselves.\n\n';
-                }
-              }
-              
               // Extract missing resolver resources
               const missingResolverMatch = log.match(/Missing resolver for the following resources:\s+([\s\S]*?)(?=Deprecated resources detected:|$)/);
               if (missingResolverMatch && missingResolverMatch[1]) {

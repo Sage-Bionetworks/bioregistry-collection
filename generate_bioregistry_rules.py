@@ -3,6 +3,7 @@ import yaml
 import re
 import sys
 from collections import Counter
+import argparse
 
 def fetch_registry_entry(prefix):
     url = f"https://bioregistry.io/api/registry/{prefix}"
@@ -230,5 +231,31 @@ export const bioregistryRules = [
     return not has_issues, missing_patterns, invalid_prefixes, duplicates, missing_resolver, deprecated_resources
 
 if __name__ == "__main__":
-    success, missing_patterns, invalid_prefixes, duplicates, missing_resolver, deprecated_resources = generate_typescript_file()
-    sys.exit(0 if success else 1) 
+    parser = argparse.ArgumentParser(description="Generate bioregistry rules and run tests.")
+    parser.add_argument('--url-resolution-only', action='store_true', help='Run only the URL resolution test.')
+    args = parser.parse_args()
+
+    if args.url_resolution_only:
+        # Only run the URL resolution test
+        with open("collection.yaml", "r") as file:
+            data = yaml.safe_load(file)
+            resources = data["00000016"]["resources"]
+        all_rules_data = []
+        for resource in resources:
+            entry, prefix_exists = fetch_registry_entry(resource)
+            if not prefix_exists:
+                continue
+            regex = entry.get("pattern", "")
+            if regex:
+                trimmed_regex = trim_regex(regex)
+                if trimmed_regex:
+                    all_rules_data.append({
+                        "prefix": resource,
+                        "trimmed_regex": trimmed_regex,
+                        "example": entry.get("example")
+                    })
+        run_resolution_test(all_rules_data)
+        sys.exit(0)
+    else:
+        success, missing_patterns, invalid_prefixes, duplicates, missing_resolver, deprecated_resources = generate_typescript_file()
+        sys.exit(0 if success else 1) 

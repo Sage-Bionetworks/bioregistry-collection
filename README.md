@@ -91,3 +91,32 @@ If your PR fails validation, check the PR comments for:
 ## Acknowledgements
 
 For more info about Bioregistry please see Hoyt, C. T., et al. (2022) [Unifying the identification of biomedical entities with the Bioregistry.](https://www.nature.com/articles/s41597-022-01807-3) Nature Scientific Data, s41597-022-01807-3.
+
+## Bioregistry Collection Validation Workflows
+
+### 1. Main PR Validation (`update_bioregistry.yml`)
+- **Runs automatically** on every pull request to `main`.
+- **Checks:**
+  - Missing regex patterns
+  - Duplicate resources
+  - Invalid prefixes
+  - Missing resolver
+  - Deprecated resources
+  - Cross-interference in regexes
+- **Does NOT check:** URL resolution (see below for on-demand check)
+- **PR Comments:** Issues are reported as a comment on the PR.
+
+### 2. On-Demand URL Resolution Test (`url_resolution_check.yml`)
+- **Does NOT run automatically.**
+- **How to use:**  
+  1. Go to the **Actions** tab in GitHub.
+  2. Select **URL Resolution Test**.
+  3. Click **Run workflow** (optionally select a branch/PR).
+- **What it does:**
+  - Checks if all example CURIEs resolve to a valid URL on bioregistry.io.
+  - Posts a comment on the PR (if run in a PR context) or adds a summary to the workflow run.
+  - **Note:** Failures are informational only (often due to rate limits, SSL, or temporary server issues).
+
+**Why this setup?**
+- Keeps PR feedback fast and focused on actionable issues.
+- Lets you check URL resolution only when needed, without slowing down every PR.
