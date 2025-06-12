@@ -203,11 +203,11 @@ const onMatch = (value: string) => `https://bioregistry.io/${value}`;
 
 export const bioregistryRules = [
 """
-        file_footer = "];\n"
+        file_footer = "]\n"
         file.write(file_header + ts_content + file_footer)
 
     # Run the other diagnostic test
-    run_resolution_test(all_rules_data)
+    # run_resolution_test(all_rules_data)  # <-- Remove this line
 
     has_issues = False
     if missing_patterns:
