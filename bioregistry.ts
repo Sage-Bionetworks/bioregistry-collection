@@ -53,7 +53,7 @@ export const bioregistryRules = [
     onMatch,
   },
   {
-    regex: /(bioportal:(\d+)|(\w+))/,
+    regex: /(bioportal:(?:(\d+)|(\w+)))/,
     onMatch,
   },
   {
@@ -197,7 +197,7 @@ export const bioregistryRules = [
     onMatch,
   },
   {
-    regex: /(ctri:CTRI/\d{4}/\d{2,3}/\d+)/,
+    regex: /(ctri:CTRI\/\d{4}\/\d{2,3}\/\d+)/,
     onMatch,
   },
   {
@@ -237,7 +237,7 @@ export const bioregistryRules = [
     onMatch,
   },
   {
-    regex: /(doi:10.\d{2,9}/.*)/,
+    regex: /(doi:10.\d{2,9}\/.*)/,
     onMatch,
   },
   {
@@ -261,7 +261,7 @@ export const bioregistryRules = [
     onMatch,
   },
   {
-    regex: /(ec:\d{1,2}(((\.\d{1,3}){1,3})|(\.\d+){2}\.[nB]\d{1,3}|\.-\.-\.-|\.\d{1,3}\.-\.-|\.\d{1,3}\.\d{1,3}\.-)?)/,
+    regex: /(ec:(?:\d{1,2}(((\.\d{1,3}){1,3})|(\.\d+){2}\.[nB]\d{1,3}|\.-\.-\.-|\.\d{1,3}\.-\.-|\.\d{1,3}\.\d{1,3}\.-)?))/,
     onMatch,
   },
   {
@@ -417,7 +417,7 @@ export const bioregistryRules = [
     onMatch,
   },
   {
-    regex: /(icd9:(\d\d\d|V\d\d|E[8-9]\d\d)(\.\d{1,2})?)/,
+    regex: /(icd9:(?:((\d\d\d|V\d\d|E[8-9]\d\d)(\.\d{1,2})?)|(\d{1,3}-\d{1,3})))/,
     onMatch,
   },
   {
@@ -481,7 +481,7 @@ export const bioregistryRules = [
     onMatch,
   },
   {
-    regex: /(kegg:([CHDEGTMKR]\d+)|(\w+:[\w\d\.-]*)|([a-z]{3,5})|(\w{2,4}\d{5}))/,
+    regex: /(kegg:(?:([CHDEGTMKR]\d+)|(\w+:[\w\d\.-]*)|([a-z]{3,5})|(\w{2,4}\d{5})))/,
     onMatch,
   },
   {
@@ -561,7 +561,7 @@ export const bioregistryRules = [
     onMatch,
   },
   {
-    regex: /(ncbitaxon:\d+)/,
+    regex: /(ncbitaxon:(?:(\d+)|([a-zA-Z_]+)))/,
     onMatch,
   },
   {
@@ -785,7 +785,7 @@ export const bioregistryRules = [
     onMatch,
   },
   {
-    regex: /(string:([A-N,R-Z][0-9][A-Z][A-Z, 0-9][A-Z, 0-9][0-9])|([O,P,Q][0-9][A-Z, 0-9][A-Z, 0-9][A-Z, 0-9][0-9])|([0-9][A-Za-z0-9]{3}))/,
+    regex: /(string:(?:([A-N,R-Z][0-9][A-Z][A-Z, 0-9][A-Z, 0-9][0-9])|([O,P,Q][0-9][A-Z, 0-9][A-Z, 0-9][A-Z, 0-9][0-9])|([0-9][A-Za-z0-9]{3})))/,
     onMatch,
   },
   {
@@ -809,7 +809,7 @@ export const bioregistryRules = [
     onMatch,
   },
   {
-    regex: /(uniprot:([A-N,R-Z][0-9]([A-Z][A-Z, 0-9][A-Z, 0-9][0-9]){1,2})|([O,P,Q][0-9][A-Z, 0-9][A-Z, 0-9][A-Z, 0-9][0-9])(\.\d+)?)/,
+    regex: /(uniprot:(?:([A-N,R-Z][0-9]([A-Z][A-Z, 0-9][A-Z, 0-9][0-9]){1,2})|([O,P,Q][0-9][A-Z, 0-9][A-Z, 0-9][A-Z, 0-9][0-9])(\.\d+)?))/,
     onMatch,
   },
   {
@@ -856,4 +856,4 @@ export const bioregistryRules = [
     regex: /(zinc:(ZINC)?\d+)/,
     onMatch,
   },
-]
+];

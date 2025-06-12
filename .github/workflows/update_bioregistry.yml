@@ -93,6 +93,34 @@ jobs:
             if (fs.existsSync('validation.log')) {
               const log = fs.readFileSync('validation.log', 'utf8');
               
+              // Extract cross-interference test results
+              const interferenceMatch = log.match(/--- Cross-Interference Test Report ---\s+([\s\S]*?)--------------------------------------/);
+              if (interferenceMatch && interferenceMatch[1]) {
+                const interferenceReport = interferenceMatch[1].trim();
+                if (interferenceReport && !interferenceReport.includes('No cross-interference issues detected')) {
+                  message += '### Cross-Interference Test Results\n\n';
+                  message += 'The following regexes have been identified as causing cross-interference and have been wrapped in non-capturing groups:\n\n';
+                  message += '```\n';
+                  message += interferenceReport;
+                  message += '\n```\n\n';
+                  hasIssues = true;
+                }
+              }
+              
+              // Extract URL resolution test results
+              const urlResolutionMatch = log.match(/--- URL Resolution Test Report ---\s+([\s\S]*?)----------------------------------/);
+              if (urlResolutionMatch && urlResolutionMatch[1]) {
+                const urlResolutionReport = urlResolutionMatch[1].trim();
+                if (urlResolutionReport && !urlResolutionReport.includes('All example URLs resolved successfully')) {
+                  message += '### URL Resolution Test Results (Informational)\n\n';
+                  message += 'The following URLs had resolution issues. This is for informational purposes only and does not block the PR:\n\n';
+                  message += '```\n';
+                  message += urlResolutionReport;
+                  message += '\n```\n\n';
+                  message += 'Note: These failures are often due to API rate limits, SSL issues, or temporary server problems and may not indicate actual issues with the CURIEs themselves.\n\n';
+                }
+              }
+              
               // Extract missing resolver resources
               const missingResolverMatch = log.match(/Missing resolver for the following resources:\s+([\s\S]*?)(?=Deprecated resources detected:|$)/);
               if (missingResolverMatch && missingResolverMatch[1]) {
