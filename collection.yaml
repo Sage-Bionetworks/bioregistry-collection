@@ -35,7 +35,6 @@
   - brenda.ligand
   - brenda.ligandgroup
   - bto
-  - cadsr
   - cath
   - cbioportal
   - cdd
@@ -60,7 +59,6 @@
   - cosmic.cell
   - cpt
   - ctd.chemical
-  - ctis
   - ctri
   - cvx
   - dbgap
@@ -68,7 +66,6 @@
   - decipher
   - depmap
   - dhba
-  - dicom
   - disprot
   - dmba
   - doi
@@ -86,7 +83,6 @@
   - empiar
   - ena.embl
   - ensembl
-  - ensembl.fungi
   - ensembl.metazoa
   - ensembl.plant
   - euclinicaltrials
@@ -107,15 +103,11 @@
   - gramene.protein
   - gtdb
   - hba
-  - hc.npn
   - hc.trial
   - hgnc
   - hl7.v2codesystem
-  - hl7.v3codesystem
   - hmdb
-  - hp
   - icd10
-  - icd11
   - icd9
   - icdc
   - icf
@@ -131,7 +123,6 @@
   - isrctn
   - itis
   - jaxmice
-  - jrct
   - kegg
   - kegg.compound
   - kegg.disease
@@ -140,7 +131,6 @@
   - kegg.pathway
   - kegg.reaction
   - loinc
-  - lrg
   - massive
   - mba
   - mesh
@@ -165,7 +155,6 @@
   - orphanet.ordo
   - osf
   - panther.family
-  - panther.node
   - panther.pathway
   - panther.pthcmp
   - pba
@@ -190,14 +179,12 @@
   - reactome
   - rebec
   - refseq
-  - repec
   - rfam
   - rfc
   - rgd
   - rhea
   - rnacentral
   - ror
-  - rpcec
   - rrrc
   - rxnorm
   - scop
