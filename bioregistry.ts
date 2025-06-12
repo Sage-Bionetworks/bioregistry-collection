@@ -93,10 +93,6 @@ export const bioregistryRules = [
     onMatch,
   },
   {
-    regex: /(cadsr:[0-9]*)/,
-    onMatch,
-  },
-  {
     regex: /(cath:[1-6]\.[0-9]+\.[0-9]+\.[0-9]+)/,
     onMatch,
   },
@@ -193,10 +189,6 @@ export const bioregistryRules = [
     onMatch,
   },
   {
-    regex: /(ctis:\d{4}-\d+-\d+-\d+)/,
-    onMatch,
-  },
-  {
     regex: /(ctri:CTRI\/\d{4}\/\d{2,3}\/\d+)/,
     onMatch,
   },
@@ -222,10 +214,6 @@ export const bioregistryRules = [
   },
   {
     regex: /(dhba:\d+)/,
-    onMatch,
-  },
-  {
-    regex: /(dicom:\d+)/,
     onMatch,
   },
   {
@@ -261,7 +249,7 @@ export const bioregistryRules = [
     onMatch,
   },
   {
-    regex: /(ec:(?:\d{1,2}(((\.\d{1,3}){1,3})|(\.\d+){2}\.[nB]\d{1,3}|\.-\.-\.-|\.\d{1,3}\.-\.-|\.\d{1,3}\.\d{1,3}\.-)?))/,
+    regex: /(ec:\d{1,2}(((\.\d{1,3}){1,3})|(\.\d+){2}\.[nB]\d{1,3}|\.-\.-\.-|\.\d{1,3}\.-\.-|\.\d{1,3}\.\d{1,3}\.-)?)/,
     onMatch,
   },
   {
@@ -294,10 +282,6 @@ export const bioregistryRules = [
   },
   {
     regex: /(ensembl:((ENS[FPTG]\d{11}(\.\d+)?)|(FB\w{2}\d{7})|(Y[A-Z]{2}\d{3}[a-zA-Z](\-[A-Z])?)|([A-Z_a-z0-9]+(\.)?(t)?(\d+)?([a-z])?)))/,
-    onMatch,
-  },
-  {
-    regex: /(ensembl.fungi:[A-Z-a-z0-9]+)/,
     onMatch,
   },
   {
@@ -381,10 +365,6 @@ export const bioregistryRules = [
     onMatch,
   },
   {
-    regex: /(hc.npn:\d+)/,
-    onMatch,
-  },
-  {
     regex: /(hc.trial:\d+)/,
     onMatch,
   },
@@ -397,23 +377,11 @@ export const bioregistryRules = [
     onMatch,
   },
   {
-    regex: /(hl7.v3codesystem:\w+)/,
-    onMatch,
-  },
-  {
     regex: /(hmdb:HMDB\d+)/,
     onMatch,
   },
   {
-    regex: /(hp:\d{7})/,
-    onMatch,
-  },
-  {
     regex: /(icd10:(([XVI]+)|([A-Z][0-9]+((-[A-Z][0-9]+)|(\.[0-9]))?)))/,
-    onMatch,
-  },
-  {
-    regex: /(icd11:[1-9]\d*)/,
     onMatch,
   },
   {
@@ -477,11 +445,7 @@ export const bioregistryRules = [
     onMatch,
   },
   {
-    regex: /(jrct:jRCT\w?\d+)/,
-    onMatch,
-  },
-  {
-    regex: /(kegg:(?:([CHDEGTMKR]\d+)|(\w+:[\w\d\.-]*)|([a-z]{3,5})|(\w{2,4}\d{5})))/,
+    regex: /(kegg:(([CHDEGTMKR]\d+)|(\w+:[\w\d\.-]*)|(\w{2,4}\d{5})|([a-z]{3,5})))/,
     onMatch,
   },
   {
@@ -510,10 +474,6 @@ export const bioregistryRules = [
   },
   {
     regex: /(loinc:(\d|\w)+-\d)/,
-    onMatch,
-  },
-  {
-    regex: /(lrg:\d+)/,
     onMatch,
   },
   {
@@ -613,10 +573,6 @@ export const bioregistryRules = [
     onMatch,
   },
   {
-    regex: /(panther.node:PTN\d{9})/,
-    onMatch,
-  },
-  {
     regex: /(panther.pathway:P\d{5})/,
     onMatch,
   },
@@ -713,10 +669,6 @@ export const bioregistryRules = [
     onMatch,
   },
   {
-    regex: /(repec:\d+-\d+(-[A-Z])?)/,
-    onMatch,
-  },
-  {
     regex: /(rfam:RF\d{5})/,
     onMatch,
   },
@@ -738,10 +690,6 @@ export const bioregistryRules = [
   },
   {
     regex: /(ror:0[a-hj-km-np-tv-z|0-9]{6}[0-9]{2})/,
-    onMatch,
-  },
-  {
-    regex: /(rpcec:RPCEC\d+)/,
     onMatch,
   },
   {
@@ -856,4 +804,4 @@ export const bioregistryRules = [
     regex: /(zinc:(ZINC)?\d+)/,
     onMatch,
   },
-];
+]

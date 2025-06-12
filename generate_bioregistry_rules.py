@@ -4,6 +4,7 @@ import re
 import sys
 from collections import Counter
 import argparse
+import os
 
 def fetch_registry_entry(prefix):
     url = f"https://bioregistry.io/api/registry/{prefix}"
@@ -130,6 +131,12 @@ def generate_typescript_file():
         data = yaml.safe_load(file)
         resources = data["00000016"]["resources"]
 
+    # Load regex overrides if the file exists
+    overrides = {}
+    if os.path.exists("regex_overrides.yaml"):
+        with open("regex_overrides.yaml", "r") as f:
+            overrides = yaml.safe_load(f) or {}
+
     duplicates = find_duplicates(resources)
     if duplicates:
         with open("duplicates.txt", "w") as file:
@@ -154,8 +161,8 @@ def generate_typescript_file():
             # Check for deprecation (warning only)
             if entry.get("deprecated", False):
                 deprecated_resources.append(resource)
-        
-        regex = entry.get("pattern", "")
+        # Use override if present, else use bioregistry pattern
+        regex = overrides.get(resource) or entry.get("pattern", "")
         if regex:
             trimmed_regex = trim_regex(regex)
             if trimmed_regex:
