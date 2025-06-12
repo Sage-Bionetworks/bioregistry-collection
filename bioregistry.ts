@@ -445,7 +445,7 @@ export const bioregistryRules = [
     onMatch,
   },
   {
-    regex: /(kegg:(?:([CHDEGTMKR]\d+)|(\w+:[\w\d\.-]*)|([a-z]{3,5})|(\w{2,4}\d{5})))/,
+    regex: /(kegg:(?:([CHDEGTMKR]\d+)|(\w+:[\w\d\.-]*)|(\w{2,4}\d{5})|([a-z]{3,5})))/,
     onMatch,
   },
   {
