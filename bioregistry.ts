@@ -385,7 +385,7 @@ export const bioregistryRules = [
     onMatch,
   },
   {
-    regex: /(icd9:(?:((\d\d\d|V\d\d|E[8-9]\d\d)(\.\d{1,2})?)|(\d{1,3}-\d{1,3})))/,
+    regex: /(icd9:(?:(\d{1,3}-\d{1,3})|((\d\d\d|V\d\d|E[8-9]\d\d)(\.\d{1,2})?)))/,
     onMatch,
   },
   {
