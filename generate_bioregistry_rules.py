@@ -203,7 +203,8 @@ def generate_typescript_file():
 
     with open("bioregistry.ts", "w") as file:
         # Prepend the header and append the footer to the generated content
-        file_header = """// This file is auto-generated. Do not edit manually.
+        file_header = """/* eslint-disable no-useless-escape */
+// This file is auto-generated. Do not edit manually.
 // Generated from bioregistry.io API based on collection.yaml
 
 const onMatch = (value: string) => `https://bioregistry.io/${value}`;
