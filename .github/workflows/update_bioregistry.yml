@@ -9,6 +9,8 @@ on:
 jobs:
   validate-rules:
     runs-on: ubuntu-latest
+    env:
+      GITHUB_TOKEN: ${{ secrets.BUILD_PAT }}
     steps:
       - uses: actions/checkout@v4
 
