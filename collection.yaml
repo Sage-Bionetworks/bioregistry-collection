@@ -185,6 +185,7 @@
   - rhea
   - rnacentral
   - ror
+  - rrid
   - rrrc
   - rxnorm
   - scop
@@ -213,4 +214,3 @@
   - zenodo.record
   - zfin
   - zinc
-  - rrid

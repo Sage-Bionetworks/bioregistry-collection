@@ -694,6 +694,10 @@ export const bioregistryRules = [
     onMatch,
   },
   {
+    regex: /(rrid:[a-zA-Z]+.+)/,
+    onMatch,
+  },
+  {
     regex: /(rrrc:\d+)/,
     onMatch,
   },
