@@ -642,6 +642,10 @@ export const bioregistryRules = [
     onMatch,
   },
   {
+    regex: /(pride:\d{7})/,
+    onMatch,
+  },
+  {
     regex: /(pubchem.compound:\d+)/,
     onMatch,
   },
