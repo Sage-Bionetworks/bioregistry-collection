@@ -136,44 +136,31 @@ def make_inner_groups_non_capturing(regex_pattern: str) -> str:
     - Escaped parentheses `\\(`
     - Character classes `[...]`
     - Already non-capturing groups `(?:...)` and other `(?...)` groups.
+    - Nested groups.
     """
     new_pattern = ""
-    in_char_class = False
     i = 0
     n = len(regex_pattern)
     while i < n:
         char = regex_pattern[i]
         if char == '\\\\':
-            # Handle escaped backslash
+            # Handle escaped characters by consuming the next char as well
             if i + 1 < n:
                 new_pattern += regex_pattern[i:i+2]
                 i += 2
             else:
                 new_pattern += char
                 i += 1
-            continue
-        
-        if char == '[' and not in_char_class:
-            in_char_class = True
-            new_pattern += char
-            i += 1
-            continue
-
-        if char == ']' and in_char_class:
-            in_char_class = False
-            new_pattern += char
-            i += 1
-            continue
-        
-        if char == '(' and not in_char_class:
+        elif char == '(':
             # Check if it is already a non-capturing/special group
             if i + 1 < n and regex_pattern[i+1] == '?':
                 new_pattern += '('
             else:
                 new_pattern += '(?:'
+            i += 1
         else:
             new_pattern += char
-        i += 1
+            i += 1
     return new_pattern
 
 def generate_typescript_file():
@@ -241,6 +228,10 @@ def generate_typescript_file():
         
         # Start with the base regex string
         final_regex_str = f"{resource}:{trimmed_regex}"
+
+        # Conditionally apply the non-capturing group ONLY to offending rules.
+        if resource in offending_prefixes:
+            final_regex_str = f"{resource}:(?:{trimmed_regex})"
         
         # The entire CURIE pattern must be a single capturing group for Linkify-it
         final_regex_str = f"({final_regex_str})"

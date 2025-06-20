@@ -54,7 +54,7 @@ export const bioregistryRules = [
     onMatch,
   },
   {
-    regex: /(bioportal:(?:\d+)|(?:\w+))/,
+    regex: /(bioportal:(?:(?:\d+)|(?:\w+)))/,
     onMatch,
   },
   {
@@ -406,7 +406,7 @@ export const bioregistryRules = [
     onMatch,
   },
   {
-    regex: /(inchi:InChI\=1S?\/[A-Za-z0-9\.]+(?:\+[0-9]+)?(?:\/[cnpqbtmsih][A-Za-z0-9\-\+\(\)\,\/\?\;\.]+)*)/,
+    regex: /(inchi:InChI\=1S?\/[A-Za-z0-9\.]+(?:\+[0-9]+)?(?:\/[cnpqbtmsih][A-Za-z0-9\-\+\(?:\)\,\/\?\;\.]+)*)/,
     onMatch,
   },
   {
@@ -522,7 +522,7 @@ export const bioregistryRules = [
     onMatch,
   },
   {
-    regex: /(ncbitaxon:(?:\d+)|(?:[a-zA-Z_]+))/,
+    regex: /(ncbitaxon:(?:(?:\d+)|(?:[a-zA-Z_]+)))/,
     onMatch,
   },
   {
@@ -742,7 +742,7 @@ export const bioregistryRules = [
     onMatch,
   },
   {
-    regex: /(string:(?:[A-N,R-Z][0-9][A-Z][A-Z, 0-9][A-Z, 0-9][0-9])|(?:[O,P,Q][0-9][A-Z, 0-9][A-Z, 0-9][A-Z, 0-9][0-9])|(?:[0-9][A-Za-z0-9]{3}))/,
+    regex: /(string:(?:(?:[A-N,R-Z][0-9][A-Z][A-Z, 0-9][A-Z, 0-9][0-9])|(?:[O,P,Q][0-9][A-Z, 0-9][A-Z, 0-9][A-Z, 0-9][0-9])|(?:[0-9][A-Za-z0-9]{3})))/,
     onMatch,
   },
   {
@@ -766,7 +766,7 @@ export const bioregistryRules = [
     onMatch,
   },
   {
-    regex: /(uniprot:(?:[A-N,R-Z][0-9](?:[A-Z][A-Z, 0-9][A-Z, 0-9][0-9]){1,2})|(?:[O,P,Q][0-9][A-Z, 0-9][A-Z, 0-9][A-Z, 0-9][0-9])(?:\.\d+)?)/,
+    regex: /(uniprot:(?:(?:[A-N,R-Z][0-9](?:[A-Z][A-Z, 0-9][A-Z, 0-9][0-9]){1,2})|(?:[O,P,Q][0-9][A-Z, 0-9][A-Z, 0-9][A-Z, 0-9][0-9])(?:\.\d+)?))/,
     onMatch,
   },
   {
