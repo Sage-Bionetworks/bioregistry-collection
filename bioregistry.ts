@@ -542,6 +542,10 @@ export const bioregistryRules = [
     onMatch,
   },
   {
+    regex: /(nihreporter.project:\d+)/,
+    onMatch,
+  },
+  {
     regex: /(nord:\d+)/,
     onMatch,
   },

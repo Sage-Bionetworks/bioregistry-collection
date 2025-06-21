@@ -147,6 +147,7 @@
   - ndc
   - ndfrt
   - nextprot
+  - nihreporter.project
   - nord
   - omim
   - omop
@@ -215,4 +216,3 @@
   - zenodo.record
   - zfin
   - zinc
-  - nihreporter.project
