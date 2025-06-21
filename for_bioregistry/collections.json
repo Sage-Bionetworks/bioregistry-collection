@@ -725,6 +725,7 @@
         "rhea",
         "rnacentral",
         "ror",
+        "rrid",
         "rrrc",
         "rxnorm",
         "scop",
@@ -752,7 +753,8 @@
         "xenbase",
         "zenodo.record",
         "zfin",
-        "zinc"
+        "zinc",
+        "pride.project"
       ]
     }
   ]
