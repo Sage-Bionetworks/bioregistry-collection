@@ -126,6 +126,43 @@ def run_resolution_test(rules):
     print("Note: URL resolution failures are informational only and do not affect the script's exit code.")
     return failures
 
+def make_inner_groups_non_capturing(regex_pattern: str) -> str:
+    """
+    Converts all capturing groups (e.g. `(...)`) in a regex pattern to
+    non-capturing groups (e.g. `(?:...)`). This is done to prevent
+    unintended capturing when multiple regexes are combined.
+    
+    This function handles:
+    - Escaped parentheses `\\(`
+    - Character classes `[...]`
+    - Already non-capturing groups `(?:...)` and other `(?...)` groups.
+    - Nested groups.
+    """
+    new_pattern = ""
+    i = 0
+    n = len(regex_pattern)
+    while i < n:
+        char = regex_pattern[i]
+        if char == '\\\\':
+            # Handle escaped characters by consuming the next char as well
+            if i + 1 < n:
+                new_pattern += regex_pattern[i:i+2]
+                i += 2
+            else:
+                new_pattern += char
+                i += 1
+        elif char == '(':
+            # Check if it is already a non-capturing/special group
+            if i + 1 < n and regex_pattern[i+1] == '?':
+                new_pattern += '('
+            else:
+                new_pattern += '(?:'
+            i += 1
+        else:
+            new_pattern += char
+            i += 1
+    return new_pattern
+
 def generate_typescript_file():
     with open("collection.yaml", "r") as file:
         data = yaml.safe_load(file)
@@ -186,7 +223,8 @@ def generate_typescript_file():
     ts_content = ""  # Reset and build from scratch
     for rule in all_rules_data:
         resource = rule['prefix']
-        trimmed_regex = rule['trimmed_regex']
+        # Convert inner groups to non-capturing BEFORE any other processing.
+        trimmed_regex = make_inner_groups_non_capturing(rule['trimmed_regex'])
         
         # Start with the base regex string
         final_regex_str = f"{resource}:{trimmed_regex}"
