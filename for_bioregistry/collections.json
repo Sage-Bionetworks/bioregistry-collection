@@ -687,6 +687,7 @@
         "ndc",
         "ndfrt",
         "nextprot",
+        "nihreporter.project",
         "nord",
         "omim",
         "omop",
@@ -754,8 +755,7 @@
         "xenbase",
         "zenodo.record",
         "zfin",
-        "zinc",
-        "nihreporter.project"
+        "zinc"
       ]
     }
   ]
