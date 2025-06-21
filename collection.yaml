@@ -172,7 +172,6 @@
   - pharmgkb.pathways
   - pmc
   - pombase
-  - pride
   - pubchem.compound
   - pubmed
   - px
@@ -215,3 +214,4 @@
   - zenodo.record
   - zfin
   - zinc
+  - pride.project
