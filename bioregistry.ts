@@ -642,7 +642,7 @@ export const bioregistryRules = [
     onMatch,
   },
   {
-    regex: /(pride:\d{7})/,
+    regex: /(pride.project:P(?:X|R|A)D\d{6})/,
     onMatch,
   },
   {
