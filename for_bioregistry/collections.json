@@ -712,6 +712,7 @@
         "pharmgkb.pathways",
         "pmc",
         "pombase",
+        "pride.project",
         "pubchem.compound",
         "pubmed",
         "px",
@@ -725,6 +726,7 @@
         "rhea",
         "rnacentral",
         "ror",
+        "rrid",
         "rrrc",
         "rxnorm",
         "scop",
@@ -752,7 +754,8 @@
         "xenbase",
         "zenodo.record",
         "zfin",
-        "zinc"
+        "zinc",
+        "nihreporter.project"
       ]
     }
   ]
