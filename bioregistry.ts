@@ -558,6 +558,10 @@ export const bioregistryRules = [
     onMatch,
   },
   {
+    regex: /(obi:\d{7})/,
+    onMatch,
+  },
+  {
     regex: /(orcid:\d{4}-\d{4}-\d{4}-\d{3}(?:\d|X))/,
     onMatch,
   },
