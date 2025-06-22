@@ -22,7 +22,7 @@ export const bioregistryRules = [
     onMatch,
   },
   {
-    regex: /(arxiv:(?:\w+(?:\-\w+)?(?:\.\w+)?)?\d{4,7}(?:\.\d+(?:v\d+)?)?)/,
+    regex: /(arxiv:(?:\w+(?:\-\w+)?(?:\.\w+)?\/?)?\d{4,7}(?:\.\d+(?:v\d+)?)?)/,
     onMatch,
   },
   {
