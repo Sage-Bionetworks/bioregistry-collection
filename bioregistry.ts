@@ -526,7 +526,7 @@ export const bioregistryRules = [
     onMatch,
   },
   {
-    regex: /(ncit:[CRPA]\d+)/,
+    regex: /(ncit:(?:C|R|P|A|NHC)\d+)/,
     onMatch,
   },
   {
