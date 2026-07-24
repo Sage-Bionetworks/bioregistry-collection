@@ -1,20 +1,23 @@
 name: Validate Bioregistry Rules
 
 on:
-  pull_request_target:
+  pull_request:
     branches:
       - main
   workflow_dispatch:
 
+# This job checks out and executes PR code, including from forks, so it runs
+# with a read-only token and no access to secrets. Reporting results back to the
+# PR happens in a separate, trusted workflow (comment_validation_results.yml)
+# that never executes PR code.
+permissions:
+  contents: read
+
 jobs:
   validate-rules:
     runs-on: ubuntu-latest
-    permissions:
-      pull-requests: write
     steps:
       - uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.pull_request.head.sha }}
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -51,107 +54,20 @@ jobs:
             echo "::error::Some prefixes are not registered in bioregistry.io. Check the logs for details."
           fi
 
-      - name: Create Pull Request Comment
+      - name: Record PR number
         if: always()
-        uses: actions/github-script@v7
+        run: echo "${{ github.event.pull_request.number }}" > pr_number.txt
+
+      - name: Upload validation results
+        if: always()
+        uses: actions/upload-artifact@v4
         with:
-          github-token: ${{ github.token }}
-          script: |
-            const fs = require('fs');
-            let message = '## Bioregistry Collection Issues\n\n';
-            let hasIssues = false;
-            
-            if (fs.existsSync('missing_patterns.txt')) {
-              const missingPatterns = fs.readFileSync('missing_patterns.txt', 'utf8');
-              message += '### Missing Regex Patterns\n\n';
-              message += 'The following resources are missing regex patterns:\n\n';
-              message += '```\n';
-              message += missingPatterns;
-              message += '\n```\n\n';
-              message += 'Please check if these resources are correctly registered in bioregistry.io.\n\n';
-              hasIssues = true;
-            }
-            
-            if (fs.existsSync('duplicates.txt')) {
-              const duplicates = fs.readFileSync('duplicates.txt', 'utf8');
-              message += '### Duplicate Resources\n\n';
-              message += 'The following resources appear multiple times in collection.yaml:\n\n';
-              message += '```\n';
-              message += duplicates;
-              message += '\n```\n\n';
-              message += 'Please remove the duplicate entries.\n\n';
-              hasIssues = true;
-            }
-
-            if (fs.existsSync('invalid_prefixes.txt')) {
-              const invalidPrefixes = fs.readFileSync('invalid_prefixes.txt', 'utf8');
-              message += '### Invalid Prefixes\n\n';
-              message += 'The following prefixes are not registered in bioregistry.io:\n\n';
-              message += '```\n';
-              message += invalidPrefixes;
-              message += '\n```\n\n';
-              message += 'Please check if these prefixes are correct or need to be registered.\n\n';
-              hasIssues = true;
-            }
-
-            // Parse validation.log for missing resolver and deprecated resources
-            if (fs.existsSync('validation.log')) {
-              const log = fs.readFileSync('validation.log', 'utf8');
-              
-              // Extract cross-interference test results
-              const interferenceMatch = log.match(/--- Cross-Interference Test Report ---\s+([\s\S]*?)--------------------------------------/);
-              if (interferenceMatch && interferenceMatch[1]) {
-                const interferenceReport = interferenceMatch[1].trim();
-                if (interferenceReport && !interferenceReport.includes('No cross-interference issues detected')) {
-                  message += '### Cross-Interference Test Results\n\n';
-                  message += 'The following regexes have been identified as causing cross-interference and have been wrapped in non-capturing groups:\n\n';
-                  message += '```\n';
-                  message += interferenceReport;
-                  message += '\n```\n\n';
-                  hasIssues = true;
-                }
-              }
-              
-              // Extract missing resolver resources
-              const missingResolverMatch = log.match(/Missing resolver for the following resources:\s+([\s\S]*?)(?=Deprecated resources detected:|$)/);
-              if (missingResolverMatch && missingResolverMatch[1]) {
-                const missingResolver = missingResolverMatch[1].trim().split('\n').filter(Boolean);
-                if (missingResolver.length > 0) {
-                  message += '### Missing Resolver\n\n';
-                  message += 'The following resources do not have a resolver (uri_format) in bioregistry.io:\n\n';
-                  message += '```\n';
-                  message += missingResolver.join('\n');
-                  message += '\n```\n\n';
-                  message += 'Please check if these resources should have a resolver or be removed.\n\n';
-                  hasIssues = true;
-                }
-              }
-              
-              // Extract deprecated resources
-              const deprecatedMatch = log.match(/Deprecated resources detected:\s+([\s\S]*?)(?=$)/);
-              if (deprecatedMatch && deprecatedMatch[1]) {
-                const deprecated = deprecatedMatch[1].trim().split('\n').filter(Boolean);
-                if (deprecated.length > 0) {
-                  message += '### Deprecated Resources (Warning)\n\n';
-                  message += 'The following resources or prefixes are marked as deprecated in bioregistry.io:\n\n';
-                  message += '```\n';
-                  message += deprecated.join('\n');
-                  message += '\n```\n\n';
-                  message += 'Please check if these resources should be removed or replaced.\n\n';
-                }
-              }
-            }
-
-            if (hasIssues || message !== '## Bioregistry Collection Issues\n\n') {
-              github.rest.issues.createComment({
-                issue_number: context.issue.number,
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                body: message
-              });
-            }
-
-      - name: Cleanup temporary files
-        if: always()
-        run: |
-          rm -f validation.log
+          name: validation-results
+          path: |
+            pr_number.txt
+            validation.log
+            missing_patterns.txt
+            duplicates.txt
+            invalid_prefixes.txt
+          if-no-files-found: ignore
+          retention-days: 1
