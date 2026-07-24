@@ -51,6 +51,7 @@
   - civic.sid
   - civic.tid
   - civic.vid
+  - cl
   - clinicaltrials
   - clinvar
   - clinvar.record
