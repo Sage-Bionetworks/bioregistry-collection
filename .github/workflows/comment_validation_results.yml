@@ -1,0 +1,142 @@
+name: Comment Validation Results
+
+# Runs after "Validate Bioregistry Rules" finishes. Because it is triggered by
+# workflow_run, it executes from the base repository (main) with the base repo's
+# token and secrets, NOT the PR's code. It only reads the artifact the validation
+# job produced and posts a comment, so fork PR code never runs in this trusted
+# context. This is the safe counterpart to the read-only validation workflow.
+on:
+  workflow_run:
+    workflows: ["Validate Bioregistry Rules"]
+    types:
+      - completed
+
+permissions:
+  pull-requests: write
+  actions: read
+
+jobs:
+  comment:
+    runs-on: ubuntu-latest
+    # Only act on validation runs that were triggered by a pull request.
+    if: github.event.workflow_run.event == 'pull_request'
+    steps:
+      - name: Download validation results
+        uses: actions/download-artifact@v4
+        with:
+          name: validation-results
+          run-id: ${{ github.event.workflow_run.id }}
+          github-token: ${{ github.token }}
+          path: results
+
+      - name: Create Pull Request Comment
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const dir = 'results';
+            const read = (name) => {
+              try {
+                return fs.readFileSync(`${dir}/${name}`, 'utf8');
+              } catch (e) {
+                return null;
+              }
+            };
+
+            const prNumberRaw = read('pr_number.txt');
+            const prNumber = prNumberRaw ? parseInt(prNumberRaw.trim(), 10) : NaN;
+            if (!prNumber) {
+              core.info('No PR number found in artifact; skipping comment.');
+              return;
+            }
+
+            let message = '## Bioregistry Collection Issues\n\n';
+            let hasIssues = false;
+
+            const missingPatterns = read('missing_patterns.txt');
+            if (missingPatterns) {
+              message += '### Missing Regex Patterns\n\n';
+              message += 'The following resources are missing regex patterns:\n\n';
+              message += '```\n';
+              message += missingPatterns;
+              message += '\n```\n\n';
+              message += 'Please check if these resources are correctly registered in bioregistry.io.\n\n';
+              hasIssues = true;
+            }
+
+            const duplicates = read('duplicates.txt');
+            if (duplicates) {
+              message += '### Duplicate Resources\n\n';
+              message += 'The following resources appear multiple times in collection.yaml:\n\n';
+              message += '```\n';
+              message += duplicates;
+              message += '\n```\n\n';
+              message += 'Please remove the duplicate entries.\n\n';
+              hasIssues = true;
+            }
+
+            const invalidPrefixes = read('invalid_prefixes.txt');
+            if (invalidPrefixes) {
+              message += '### Invalid Prefixes\n\n';
+              message += 'The following prefixes are not registered in bioregistry.io:\n\n';
+              message += '```\n';
+              message += invalidPrefixes;
+              message += '\n```\n\n';
+              message += 'Please check if these prefixes are correct or need to be registered.\n\n';
+              hasIssues = true;
+            }
+
+            // Parse validation.log for missing resolver and deprecated resources
+            const log = read('validation.log');
+            if (log) {
+              // Extract cross-interference test results
+              const interferenceMatch = log.match(/--- Cross-Interference Test Report ---\s+([\s\S]*?)--------------------------------------/);
+              if (interferenceMatch && interferenceMatch[1]) {
+                const interferenceReport = interferenceMatch[1].trim();
+                if (interferenceReport && !interferenceReport.includes('No cross-interference issues detected')) {
+                  message += '### Cross-Interference Test Results\n\n';
+                  message += 'The following regexes have been identified as causing cross-interference and have been wrapped in non-capturing groups:\n\n';
+                  message += '```\n';
+                  message += interferenceReport;
+                  message += '\n```\n\n';
+                  hasIssues = true;
+                }
+              }
+
+              // Extract missing resolver resources
+              const missingResolverMatch = log.match(/Missing resolver for the following resources:\s+([\s\S]*?)(?=Deprecated resources detected:|$)/);
+              if (missingResolverMatch && missingResolverMatch[1]) {
+                const missingResolver = missingResolverMatch[1].trim().split('\n').filter(Boolean);
+                if (missingResolver.length > 0) {
+                  message += '### Missing Resolver\n\n';
+                  message += 'The following resources do not have a resolver (uri_format) in bioregistry.io:\n\n';
+                  message += '```\n';
+                  message += missingResolver.join('\n');
+                  message += '\n```\n\n';
+                  message += 'Please check if these resources should have a resolver or be removed.\n\n';
+                  hasIssues = true;
+                }
+              }
+
+              // Extract deprecated resources
+              const deprecatedMatch = log.match(/Deprecated resources detected:\s+([\s\S]*?)(?=$)/);
+              if (deprecatedMatch && deprecatedMatch[1]) {
+                const deprecated = deprecatedMatch[1].trim().split('\n').filter(Boolean);
+                if (deprecated.length > 0) {
+                  message += '### Deprecated Resources (Warning)\n\n';
+                  message += 'The following resources or prefixes are marked as deprecated in bioregistry.io:\n\n';
+                  message += '```\n';
+                  message += deprecated.join('\n');
+                  message += '\n```\n\n';
+                }
+              }
+            }
+
+            if (hasIssues || message !== '## Bioregistry Collection Issues\n\n') {
+              await github.rest.issues.createComment({
+                issue_number: prNumber,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body: message
+              });
+            }
